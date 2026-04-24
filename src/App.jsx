@@ -1,62 +1,66 @@
 import { useState, useEffect, useRef } from 'react'
 
 const PHONE_HREF = 'tel:7604029087'
+const LOGO_URL = 'https://mamyshairbraiding.com/wp-content/uploads/2019/05/Mamy-Hair-Braiding-San-DIego-Logo-2.png'
+
+/* shift the pink logo hue to terracotta */
+const LOGO_FILTER_NAV    = 'hue-rotate(150deg) saturate(1.4) brightness(0.85)'
+const LOGO_FILTER_FOOTER = 'hue-rotate(150deg) saturate(1.2) brightness(1.6)'
 
 const services = [
-  { icon: '🪢', name: 'Box Braids', desc: 'A timeless protective style — customized in length, thickness, and color to fit your vision.' },
-  { icon: '✨', name: 'Cornrows', desc: 'Classic flat braids styled in straight lines or creative patterns, perfect for everyday wear.' },
-  { icon: '👑', name: 'Goddess Braid', desc: 'Voluminous, flowing braids with a regal finish — every head tells a story.' },
-  { icon: '🌿', name: 'Faux Locs', desc: 'Get the dreadlock look without the commitment — elegant, lightweight, and long-lasting.' },
+  { icon: '🪢', name: 'Box Braids',        desc: 'A timeless protective style — customized in length, thickness, and color to fit your vision.' },
+  { icon: '✨', name: 'Cornrows',           desc: 'Classic flat braids styled in straight lines or creative patterns, perfect for everyday wear.' },
+  { icon: '👑', name: 'Goddess Braid',     desc: 'Voluminous, flowing braids with a regal finish — every head tells a story.' },
+  { icon: '🌿', name: 'Faux Locs',         desc: 'Get the dreadlock look without the commitment — elegant, lightweight, and long-lasting.' },
   { icon: '🔄', name: 'Senegalese Twists', desc: 'Sleek, silky twists that combine beauty and protection in one stunning style.' },
-  { icon: '💫', name: 'Kinky Twists', desc: 'Full, textured twists with a natural look — great for embracing your curl pattern.' },
-  { icon: '🎀', name: 'Micros Braid', desc: 'Tiny, precise braids crafted with expert hands. The ultimate in intricate protective styling.' },
-  { icon: '🧵', name: 'Single Braids', desc: 'Individual braids that offer maximum versatility — style them up, down, or anywhere in between.' },
-  { icon: '🪡', name: 'Sewing Weave', desc: 'Professional weave installations using a sew-in technique for a natural, seamless finish.' },
-  { icon: '🌊', name: 'Lemonade Braids', desc: 'Side-swept cornrows with a bold, statement-making style inspired by iconic looks.' },
-  { icon: '🌺', name: 'Halo Braid', desc: 'A stunning crown braid that wraps elegantly around the head — perfect for any occasion.' },
-  { icon: '🔒', name: 'Dreadlocks', desc: 'New installations, maintenance, and styling for natural or starter locs at every stage.' },
-  { icon: '🪮', name: 'Crochet Braids', desc: 'Fast, versatile crochet styles in any texture — straight, curly, or wavy.' },
-  { icon: '💇', name: 'Custom Wigs', desc: 'Handcrafted, fully customized wigs built to your exact specifications — fit, length, and style.' },
+  { icon: '💫', name: 'Kinky Twists',      desc: 'Full, textured twists with a natural look — great for embracing your curl pattern.' },
+  { icon: '🎀', name: 'Micros Braid',      desc: 'Tiny, precise braids crafted with expert hands. The ultimate in intricate protective styling.' },
+  { icon: '🧵', name: 'Single Braids',     desc: 'Individual braids that offer maximum versatility — style them up, down, or anywhere in between.' },
+  { icon: '🪡', name: 'Sewing Weave',      desc: 'Professional weave installations using a sew-in technique for a natural, seamless finish.' },
+  { icon: '🌊', name: 'Lemonade Braids',   desc: 'Side-swept cornrows with a bold, statement-making style inspired by iconic looks.' },
+  { icon: '🌺', name: 'Halo Braid',        desc: 'A stunning crown braid that wraps elegantly around the head — perfect for any occasion.' },
+  { icon: '🔒', name: 'Dreadlocks',        desc: 'New installations, maintenance, and styling for natural or starter locs at every stage.' },
+  { icon: '🪮', name: 'Crochet Braids',    desc: 'Fast, versatile crochet styles in any texture — straight, curly, or wavy.' },
+  { icon: '💇', name: 'Custom Wigs',       desc: 'Handcrafted, fully customized wigs built to your exact specifications — fit, length, and style.' },
 ]
 
+/* ─── Icons ─────────────────────────────────────────── */
 const PhoneIcon = () => (
   <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
     <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
   </svg>
 )
-
 const PinIcon = () => (
   <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
     <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
     <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
   </svg>
 )
-
 const ClockIcon = () => (
   <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
     <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
   </svg>
 )
-
 const CalIcon = () => (
   <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
     <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
   </svg>
 )
+const ChatIcon = () => (
+  <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+  </svg>
+)
 
+/* ─── Fade-up animation hook ─────────────────────────── */
 function useFadeUp() {
   const ref = useRef(null)
   useEffect(() => {
     const el = ref.current
     if (!el) return
     const obs = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          el.classList.add('visible')
-          obs.unobserve(el)
-        }
-      },
-      { threshold: 0.12 }
+      ([entry]) => { if (entry.isIntersecting) { el.classList.add('visible'); obs.unobserve(el) } },
+      { threshold: 0.1 }
     )
     obs.observe(el)
     return () => obs.disconnect()
@@ -66,13 +70,10 @@ function useFadeUp() {
 
 function FadeUp({ children, style, className = '' }) {
   const ref = useFadeUp()
-  return (
-    <div ref={ref} className={`fade-up ${className}`} style={style}>
-      {children}
-    </div>
-  )
+  return <div ref={ref} className={`fade-up ${className}`} style={style}>{children}</div>
 }
 
+/* ─── Nav ────────────────────────────────────────────── */
 function Nav() {
   const [open, setOpen] = useState(false)
   const close = () => setOpen(false)
@@ -81,36 +82,30 @@ function Nav() {
       <nav>
         <div className="container nav-inner">
           <a href="#" className="nav-logo">
-            <img src="https://mamyshairbraiding.com/wp-content/uploads/2019/05/Mamy-Hair-Braiding-San-DIego-Logo-2.png" alt="Mamy's Hair Braiding" style={{ height: 48, width: 'auto', display: 'block' }} />
+            <img src={LOGO_URL} alt="Mamy's Hair Braiding" style={{ height: 48, width: 'auto', filter: LOGO_FILTER_NAV }} />
           </a>
           <ul className="nav-links">
             <li><a href="#services">Services</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#locations">Locations</a></li>
             <li><a href="#social">Social</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="#contact-form">Contact</a></li>
           </ul>
           <div className="nav-cta">
-            <a href={PHONE_HREF} className="btn btn-primary">
-              <PhoneIcon /> Call Now
-            </a>
+            <a href={PHONE_HREF} className="btn btn-primary"><PhoneIcon /> Call Now</a>
           </div>
-          <button
-            className={`nav-toggle${open ? ' open' : ''}`}
-            onClick={() => setOpen(o => !o)}
-            aria-label="Menu"
-          >
+          <button className={`nav-toggle${open ? ' open' : ''}`} onClick={() => setOpen(o => !o)} aria-label="Menu">
             <span /><span /><span />
           </button>
         </div>
       </nav>
       <div className={`nav-mobile${open ? ' open' : ''}`}>
-        <a href="#services" onClick={close}>Services</a>
-        <a href="#about" onClick={close}>About Mamy</a>
-        <a href="#locations" onClick={close}>Locations</a>
-        <a href="#social" onClick={close}>Social</a>
-        <a href="#contact" onClick={close}>Book an Appointment</a>
-        <a href={PHONE_HREF} style={{ color: 'var(--gold)', fontSize: '1.1rem', fontFamily: 'var(--font-sans)', fontWeight: 600 }}>
+        <a href="#services"    onClick={close}>Services</a>
+        <a href="#about"       onClick={close}>About Mamy</a>
+        <a href="#locations"   onClick={close}>Locations</a>
+        <a href="#social"      onClick={close}>Social</a>
+        <a href="#contact-form" onClick={close}>Contact Us</a>
+        <a href={PHONE_HREF} style={{ color: 'var(--terra)', fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: '1rem' }}>
           Call Now
         </a>
       </div>
@@ -118,11 +113,13 @@ function Nav() {
   )
 }
 
+/* ─── Hero ───────────────────────────────────────────── */
 function Hero() {
   return (
     <section className="hero">
-      <div className="hero-bg" />
       <div className="hero-pattern" />
+      <div className="hero-orb hero-orb-1" />
+      <div className="hero-orb hero-orb-2" />
       <div className="container">
         <div className="hero-content">
           <div className="hero-eyebrow">
@@ -136,9 +133,7 @@ function Hero() {
             15+ years of artistry. Expert braids, custom wigs, microblading, and eyelash extensions — crafted with care for every client.
           </p>
           <div className="hero-actions">
-            <a href="#contact" className="btn btn-primary">
-              <CalIcon /> Book Appointment
-            </a>
+            <a href="#contact-form" className="btn btn-primary"><CalIcon /> Book Appointment</a>
             <a href="#services" className="btn btn-outline">View Services</a>
           </div>
         </div>
@@ -153,15 +148,16 @@ function Hero() {
   )
 }
 
+/* ─── Stats ──────────────────────────────────────────── */
 function Stats() {
   return (
     <section className="stats">
       <div className="container">
         <div className="stats-grid">
           {[
-            { n: '15+', l: 'Years of Experience' },
-            { n: '20+', l: 'Braid Styles' },
-            { n: '2',   l: 'Locations' },
+            { n: '15+',    l: 'Years of Experience' },
+            { n: '20+',    l: 'Braid Styles' },
+            { n: '2',      l: 'Locations' },
             { n: '★★★★★', l: 'Yelp Reviews' },
           ].map(({ n, l }) => (
             <div key={l} className="stat-item">
@@ -175,6 +171,7 @@ function Stats() {
   )
 }
 
+/* ─── About ──────────────────────────────────────────── */
 function About() {
   return (
     <section className="about" id="about">
@@ -196,7 +193,6 @@ function About() {
               </div>
             </div>
           </FadeUp>
-
           <FadeUp style={{ transitionDelay: '0.15s' }}>
             <div className="about-body">
               <span className="section-label">Meet the Artist</span>
@@ -213,7 +209,7 @@ function About() {
                   <span key={t} className="tag">{t}</span>
                 ))}
               </div>
-              <a href="#contact" className="btn btn-dark-outline">Book a Free Consultation</a>
+              <a href="#contact-form" className="btn btn-dark-outline">Book a Free Consultation</a>
             </div>
           </FadeUp>
         </div>
@@ -222,6 +218,7 @@ function About() {
   )
 }
 
+/* ─── Services ───────────────────────────────────────── */
 function Services() {
   return (
     <section className="services" id="services">
@@ -251,15 +248,16 @@ function Services() {
   )
 }
 
+/* ─── Social ─────────────────────────────────────────── */
 function Social() {
   return (
     <section className="social-section" id="social">
       <div className="container">
         <span className="section-label">Follow Along</span>
         <h2 className="section-heading">Find Us on Social</h2>
-        <p className="social-sub">Follow Mamy for style inspiration, behind-the-scenes looks, and exclusive specials. Integrations coming soon.</p>
+        <p className="social-sub">Follow Mamy for style inspiration, behind-the-scenes looks, and exclusive specials.</p>
         <div className="social-cards">
-          <div className="social-card" title="TikTok — Coming Soon">
+          <div className="social-card">
             <div className="social-badge">Coming Soon</div>
             <div className="social-icon-wrap tiktok">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
@@ -271,7 +269,7 @@ function Social() {
             <span className="social-coming">Connect Soon</span>
           </div>
 
-          <div className="social-card" title="Instagram — Coming Soon">
+          <div className="social-card">
             <div className="social-badge">Coming Soon</div>
             <div className="social-icon-wrap instagram">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
@@ -283,7 +281,7 @@ function Social() {
             <span className="social-coming">Connect Soon</span>
           </div>
 
-          <div className="social-card" title="Yelp — View Reviews">
+          <div className="social-card">
             <div className="social-icon-wrap yelp">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
                 <path d="M20.16 12.73l-4.417 1.22c-.934.26-1.645-.8-1.094-1.596l2.454-3.593a1.063 1.063 0 011.664-.124c.718.737 1.86 2.348 1.66 3.425a.95.95 0 01-.267.668zM12.24 9.38l-.8-4.544c-.17-.957.869-1.65 1.698-1.145 1.037.625 2.627 1.91 2.9 3.003.08.32.018.658-.17.924L13.81 9.74c-.56.786-1.74.437-1.57-.36zm-1.638 2.382l-4.338-1.8c-.918-.38-.924-1.666-.009-2.054 1.131-.48 3.048-.928 4.101-.434.306.143.534.41.624.733l.578 2.073c.245.878-.612 1.653-1.462 1.117l.506.365zm.48 2.038l-1.2 4.427c-.254.936-1.453 1.09-1.916.236-.574-1.063-1.15-2.99-.765-4.062.11-.306.34-.553.638-.677l1.983-.804c.84-.34 1.712.46 1.26 1.13v-.25zm2.41 1.2l3.214 3.292c.68.698.157 1.82-.798 1.776-1.172-.055-3.075-.505-3.79-1.419a1.063 1.063 0 01-.2-.97l.6-2.108c.253-.892 1.424-1.02 1.974-.57z"/>
@@ -299,30 +297,22 @@ function Social() {
   )
 }
 
+/* ─── Location Card ──────────────────────────────────── */
 function LocationCard({ city, address, mapsUrl, label, delay }) {
   return (
     <FadeUp className="location-card" style={delay ? { transitionDelay: delay } : undefined}>
       <div className="location-map">
         <svg className="map-pin" width="40" height="48" viewBox="0 0 40 48" fill="none">
-          <path d="M20 0C9 0 0 9 0 20C0 33 20 48 20 48C20 48 40 33 40 20C40 9 31 0 20 0Z" fill="#C9A84C" opacity="0.9"/>
+          <path d="M20 0C9 0 0 9 0 20C0 33 20 48 20 48C20 48 40 33 40 20C40 9 31 0 20 0Z" fill="#C4622D" opacity="0.9"/>
           <circle cx="20" cy="20" r="8" fill="white"/>
         </svg>
-        <div className="location-map-label" style={{ position: 'absolute', bottom: 16, left: 16, textAlign: 'left', fontSize: '.8rem', letterSpacing: '.05em', textTransform: 'uppercase', color: 'rgba(255,255,255,.3)' }}>{label}</div>
+        <div style={{ position: 'absolute', bottom: 16, left: 16, fontSize: '.8rem', letterSpacing: '.05em', textTransform: 'uppercase', color: 'rgba(255,255,255,.3)' }}>{label}</div>
       </div>
       <div className="location-body">
         <h3 className="location-city">{city}</h3>
-        <div className="location-detail">
-          <PinIcon />
-          <span>{address}</span>
-        </div>
-        <div className="location-detail">
-          <PhoneIcon />
-          <a href={PHONE_HREF}><strong>Call Now</strong></a>
-        </div>
-        <div className="location-detail">
-          <ClockIcon />
-          <span>8AM – 10:30PM &nbsp;<strong>· By Appointment Only</strong></span>
-        </div>
+        <div className="location-detail"><PinIcon /><span>{address}</span></div>
+        <div className="location-detail"><PhoneIcon /><a href={PHONE_HREF}><strong>Call Now</strong></a></div>
+        <div className="location-detail"><ClockIcon /><span>8AM – 10:30PM &nbsp;<strong>· By Appointment Only</strong></span></div>
         <div style={{ marginTop: 24 }}>
           <a href={mapsUrl} target="_blank" rel="noopener noreferrer" className="btn btn-dark-outline" style={{ fontSize: 12, padding: '10px 20px' }}>
             Get Directions →
@@ -344,25 +334,15 @@ function Locations() {
           <p style={{ color: 'var(--muted)', maxWidth: 480 }}>We serve clients across San Diego County and Orange County. All appointments are by appointment only.</p>
         </FadeUp>
         <div className="locations-grid">
-          <LocationCard
-            city="San Diego"
-            address="3651 Midway Dr #40, San Diego, CA 92110"
-            mapsUrl="https://maps.google.com/?q=3651+Midway+Dr+%2340+San+Diego+CA+92110"
-            label="San Diego"
-          />
-          <LocationCard
-            city="Mission Viejo"
-            address="23162 Los Alivos Blvd Suite 220, Mission Viejo, CA 92691"
-            mapsUrl="https://maps.google.com/?q=23162+Los+Alivos+Blvd+Suite+220+Mission+Viejo+CA+92691"
-            label="Orange County"
-            delay="0.15s"
-          />
+          <LocationCard city="San Diego" address="3651 Midway Dr #40, San Diego, CA 92110" mapsUrl="https://maps.google.com/?q=3651+Midway+Dr+%2340+San+Diego+CA+92110" label="San Diego" />
+          <LocationCard city="Mission Viejo" address="23162 Los Alivos Blvd Suite 220, Mission Viejo, CA 92691" mapsUrl="https://maps.google.com/?q=23162+Los+Alivos+Blvd+Suite+220+Mission+Viejo+CA+92691" label="Orange County" delay="0.15s" />
         </div>
       </div>
     </section>
   )
 }
 
+/* ─── Payment ────────────────────────────────────────── */
 function Payment() {
   const methods = [
     { label: 'Venmo', cls: 'venmo', icon: (
@@ -381,14 +361,13 @@ function Payment() {
       </svg>
     )},
     { label: 'Cash', cls: 'cash', icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#5C3D20" strokeWidth="1.8">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--mid)" strokeWidth="1.8">
         <rect x="2" y="6" width="20" height="12" rx="2"/>
         <circle cx="12" cy="12" r="3"/>
         <path d="M6 6v12M18 6v12"/>
       </svg>
     )},
   ]
-
   return (
     <section className="payment-section" id="payment">
       <div className="container">
@@ -411,52 +390,49 @@ function Payment() {
   )
 }
 
+/* ─── Contact Form ───────────────────────────────────── */
 function ContactForm() {
   const [form, setForm] = useState({ name: '', email: '', service: '', message: '' })
   const [sent, setSent] = useState(false)
-
-  const handleChange = e => setForm(f => ({ ...f, [e.target.name]: e.target.value }))
-
-  const handleSubmit = e => {
-    e.preventDefault()
-    setSent(true)
-  }
+  const change = e => setForm(f => ({ ...f, [e.target.name]: e.target.value }))
+  const submit = e => { e.preventDefault(); setSent(true) }
 
   return (
-    <section style={{ padding: '100px 0', background: 'var(--cream)' }} id="contact-form">
+    <section className="contact-section" id="contact-form">
       <div className="container">
         <FadeUp>
           <span className="section-label">Get in Touch</span>
           <h2 className="section-heading">Contact Us</h2>
           <div className="divider" />
-          <p style={{ color: 'var(--muted)', marginBottom: 40, maxWidth: 480 }}>
+          <p style={{ color: 'var(--muted)', marginBottom: 40, maxWidth: 520 }}>
             Send us a message and we'll get back to you as soon as possible.
           </p>
         </FadeUp>
+
         {sent ? (
           <FadeUp>
-            <div style={{ background: 'var(--white)', border: '1px solid var(--border)', borderRadius: 'var(--r)', padding: 48, textAlign: 'center', maxWidth: 560 }}>
-              <div style={{ fontSize: '2rem', marginBottom: 16 }}>✓</div>
+            <div className="form-success">
+              <div style={{ fontSize: '2.4rem', marginBottom: 16, color: 'var(--terra)' }}>✓</div>
               <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.5rem', color: 'var(--deep)', marginBottom: 12 }}>Message Received!</h3>
               <p style={{ color: 'var(--muted)' }}>Thank you for reaching out. We'll be in touch soon.</p>
             </div>
           </FadeUp>
         ) : (
           <FadeUp style={{ transitionDelay: '0.1s' }}>
-            <form onSubmit={handleSubmit} style={{ maxWidth: 560, display: 'flex', flexDirection: 'column', gap: 20 }}>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
-                <div>
-                  <label style={labelStyle}>Name</label>
-                  <input name="name" required value={form.name} onChange={handleChange} placeholder="Your name" style={inputStyle} />
+            <form onSubmit={submit} style={{ maxWidth: 580, display: 'flex', flexDirection: 'column', gap: 20 }}>
+              <div className="form-row">
+                <div className="form-field">
+                  <label className="form-label">Name</label>
+                  <input className="form-input" name="name" required value={form.name} onChange={change} placeholder="Your name" />
                 </div>
-                <div>
-                  <label style={labelStyle}>Email</label>
-                  <input name="email" type="email" required value={form.email} onChange={handleChange} placeholder="your@email.com" style={inputStyle} />
+                <div className="form-field">
+                  <label className="form-label">Email</label>
+                  <input className="form-input" name="email" type="email" required value={form.email} onChange={change} placeholder="your@email.com" />
                 </div>
               </div>
-              <div>
-                <label style={labelStyle}>Service Interested In</label>
-                <select name="service" value={form.service} onChange={handleChange} style={inputStyle}>
+              <div className="form-field">
+                <label className="form-label">Service Interested In</label>
+                <select className="form-input" name="service" value={form.service} onChange={change}>
                   <option value="">Select a service…</option>
                   {services.map(s => <option key={s.name} value={s.name}>{s.name}</option>)}
                   <option value="Microblading">Microblading</option>
@@ -464,9 +440,9 @@ function ContactForm() {
                   <option value="Other">Other / Not sure yet</option>
                 </select>
               </div>
-              <div>
-                <label style={labelStyle}>Message</label>
-                <textarea name="message" required value={form.message} onChange={handleChange} rows={5} placeholder="Tell us about what you're looking for, preferred dates, any questions…" style={{ ...inputStyle, resize: 'vertical' }} />
+              <div className="form-field">
+                <label className="form-label">Message</label>
+                <textarea className="form-input" name="message" required value={form.message} onChange={change} rows={5} placeholder="Tell us what you're looking for, preferred dates, any questions…" style={{ resize: 'vertical' }} />
               </div>
               <button type="submit" className="btn btn-primary" style={{ alignSelf: 'flex-start' }}>
                 Send Message
@@ -479,29 +455,7 @@ function ContactForm() {
   )
 }
 
-const labelStyle = {
-  display: 'block',
-  fontSize: 12,
-  fontWeight: 600,
-  letterSpacing: '0.08em',
-  textTransform: 'uppercase',
-  color: 'var(--mid)',
-  marginBottom: 8,
-}
-
-const inputStyle = {
-  width: '100%',
-  padding: '12px 16px',
-  border: '1px solid var(--border)',
-  borderRadius: 'var(--r)',
-  fontFamily: 'var(--font-sans)',
-  fontSize: 14,
-  color: 'var(--dark)',
-  background: 'var(--white)',
-  outline: 'none',
-  transition: 'border-color 0.2s',
-}
-
+/* ─── Booking CTA ────────────────────────────────────── */
 function Booking() {
   return (
     <section className="booking" id="contact">
@@ -510,16 +464,9 @@ function Booking() {
         <span className="section-label">Ready to Book?</span>
         <h2 className="section-heading">Let's Create Something Beautiful</h2>
         <p className="booking-sub">Call or message us to schedule your appointment. Free consultations available for first-time clients.</p>
-        <div style={{ display: 'flex', justifyContent: 'center', gap: 16, flexWrap: 'wrap' }}>
-          <a href={PHONE_HREF} className="btn btn-primary">
-            <PhoneIcon /> Call Now
-          </a>
-          <a href="#contact-form" className="btn btn-outline">
-            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
-            </svg>
-            Send a Message
-          </a>
+        <div className="booking-actions">
+          <a href={PHONE_HREF} className="btn btn-primary"><PhoneIcon /> Call Now</a>
+          <a href="#contact-form" className="btn btn-outline"><ChatIcon /> Send a Message</a>
         </div>
         <p className="booking-note">By appointment only · San Diego &amp; Orange County</p>
       </div>
@@ -527,14 +474,15 @@ function Booking() {
   )
 }
 
+/* ─── Footer ─────────────────────────────────────────── */
 function Footer() {
   return (
     <footer>
       <div className="container">
         <div className="footer-grid">
           <div>
-            <div className="footer-brand-name" style={{ marginBottom: 16 }}>
-              <img src="https://mamyshairbraiding.com/wp-content/uploads/2019/05/Mamy-Hair-Braiding-San-DIego-Logo-2.png" alt="Mamy's Hair Braiding" style={{ height: 52, width: 'auto', filter: 'brightness(0) invert(1)' }} />
+            <div style={{ marginBottom: 20 }}>
+              <img src={LOGO_URL} alt="Mamy's Hair Braiding" style={{ height: 52, width: 'auto', filter: LOGO_FILTER_FOOTER }} />
             </div>
             <p className="footer-brand-text">
               African Hair Braiding by Mamy — San Diego and Orange County's trusted destination for expert braiding, custom wigs, microblading, and eyelash extensions. 15+ years of artistry.
@@ -550,7 +498,7 @@ function Footer() {
                   <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
                 </svg>
               </button>
-              <a className="footer-social-btn" href="https://www.yelp.com/biz/african-hair-braiding-by-mamy-san-diego" target="_blank" rel="noopener noreferrer" title="Read our Yelp reviews">
+              <a className="footer-social-btn" href="https://www.yelp.com/biz/african-hair-braiding-by-mamy-san-diego" target="_blank" rel="noopener noreferrer" title="Yelp reviews">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M20.16 12.73l-4.417 1.22c-.934.26-1.645-.8-1.094-1.596l2.454-3.593a1.063 1.063 0 011.664-.124c.718.737 1.86 2.348 1.66 3.425a.95.95 0 01-.267.668zM12.24 9.38l-.8-4.544c-.17-.957.869-1.65 1.698-1.145 1.037.625 2.627 1.91 2.9 3.003.08.32.018.658-.17.924L13.81 9.74c-.56.786-1.74.437-1.57-.36zm-1.638 2.382l-4.338-1.8c-.918-.38-.924-1.666-.009-2.054 1.131-.48 3.048-.928 4.101-.434.306.143.534.41.624.733l.578 2.073c.245.878-.612 1.653-1.462 1.117l.506.365zm.48 2.038l-1.2 4.427c-.254.936-1.453 1.09-1.916.236-.574-1.063-1.15-2.99-.765-4.062.11-.306.34-.553.638-.677l1.983-.804c.84-.34 1.712.46 1.26 1.13v-.25zm2.41 1.2l3.214 3.292c.68.698.157 1.82-.798 1.776-1.172-.055-3.075-.505-3.79-1.419a1.063 1.063 0 01-.2-.97l.6-2.108c.253-.892 1.424-1.02 1.974-.57z"/>
                 </svg>
@@ -593,20 +541,21 @@ function Footer() {
         </div>
 
         <div className="footer-bottom">
-          <p className="footer-copy">© 2024 African Hair Braiding by Mamy · San Diego &amp; Orange County</p>
-          <p className="footer-copy">Designed with ♥ · <a href="#contact">Book an Appointment</a></p>
+          <p className="footer-copy">© 2025 African Hair Braiding by Mamy · San Diego &amp; Orange County</p>
+          <p className="footer-copy">Designed with ♥ · <a href="#contact-form">Book an Appointment</a></p>
         </div>
       </div>
     </footer>
   )
 }
 
+/* ─── App ────────────────────────────────────────────── */
 export default function App() {
   return (
     <>
       <div className="announcement">
         <span>Now Serving</span> San Diego &amp; Orange County &nbsp;·&nbsp; By Appointment Only &nbsp;·&nbsp;
-        <a href={PHONE_HREF} style={{ color: 'var(--gold-light)' }}>Call Now</a>
+        <a href={PHONE_HREF} style={{ color: 'var(--terra-light)' }}>Call Now</a>
       </div>
       <Nav />
       <Hero />
