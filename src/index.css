@@ -524,8 +524,10 @@ nav {
   border-radius: var(--r);
   background: rgba(255,255,255,0.04);
   transition: var(--transition);
-  min-width: 160px;
+  width: 200px;
+  flex-shrink: 0;
   position: relative;
+  overflow: hidden;
 }
 .social-card:hover {
   background: rgba(255,255,255,0.08);
@@ -563,6 +565,11 @@ nav {
 .social-card-handle {
   font-size: 0.8rem;
   color: rgba(255,255,255,0.4);
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
 }
 .social-coming {
   font-size: 11px;
@@ -624,10 +631,12 @@ nav {
 .review-top {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
+  flex-wrap: nowrap;
+  min-width: 0;
 }
 .review-avatar {
-  width: 40px; height: 40px;
+  width: 36px; height: 36px;
   border-radius: 50%;
   background: var(--terra);
   color: var(--white);
@@ -635,20 +644,29 @@ nav {
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 0.9rem;
   flex-shrink: 0;
 }
 .review-name {
   font-weight: 600;
   font-size: 0.9rem;
   color: var(--deep);
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .review-date {
   font-size: 0.78rem;
   color: var(--muted);
   margin-top: 2px;
 }
-.review-top > span:last-child { margin-left: auto; }
+.review-top > span:last-child {
+  flex-shrink: 0;
+  white-space: nowrap;
+  margin-left: auto;
+}
 .review-text {
   font-size: 0.9rem;
   color: var(--muted);
@@ -972,8 +990,8 @@ footer {
   .services { padding: 64px 0; }
   .services-grid { grid-template-columns: 1fr; }
 
-  .social-cards { gap: 12px; }
-  .social-card { padding: 24px 20px; min-width: 130px; }
+  .social-cards { gap: 12px; justify-content: center; }
+  .social-card { width: calc(50% - 6px); flex-shrink: 1; padding: 24px 16px; min-width: 0; }
 
   .locations { padding: 64px 0; }
 

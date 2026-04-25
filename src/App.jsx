@@ -9,6 +9,7 @@ const LOGO_FILTER_NAV    = 'hue-rotate(150deg) saturate(1.4) brightness(0.85)'
 const LOGO_FILTER_FOOTER = 'hue-rotate(150deg) saturate(1.2) brightness(1.6)'
 
 const services = [
+  { icon: '✦',  name: 'Miracle Knots',     desc: 'Our signature knotless technique — ultra-lightweight, seamless at the root, and incredibly natural-looking. The ultimate protective style.' },
   { icon: '🪢', name: 'Box Braids',        desc: 'A timeless protective style — customized in length, thickness, and color to fit your vision.' },
   { icon: '✨', name: 'Cornrows',           desc: 'Classic flat braids styled in straight lines or creative patterns, perfect for everyday wear.' },
   { icon: '👑', name: 'Goddess Braid',     desc: 'Voluminous, flowing braids with a regal finish — every head tells a story.' },
