@@ -4,9 +4,9 @@ const PHONE_HREF = 'tel:7604029087'
 const YELP_URL   = 'https://www.yelp.com/biz/african-hair-braiding-by-mamy-san-diego-3?osq=mamys+hair+braiding&override_cta=Request+an+appointment'
 const LOGO_URL = 'https://mamyshairbraiding.com/wp-content/uploads/2019/05/Mamy-Hair-Braiding-San-DIego-Logo-2.png'
 
-/* shift the pink logo hue to terracotta */
-const LOGO_FILTER_NAV    = 'hue-rotate(150deg) saturate(1.4) brightness(0.85)'
-const LOGO_FILTER_FOOTER = 'hue-rotate(150deg) saturate(1.2) brightness(1.6)'
+/* warm tan — sepia shifts the pink to a sandy tan */
+const LOGO_FILTER_NAV    = 'sepia(1) saturate(1.4) hue-rotate(10deg) brightness(0.88)'
+const LOGO_FILTER_FOOTER = 'sepia(1) saturate(1.2) hue-rotate(10deg) brightness(1.5)'
 
 const services = [
   { icon: '✦',  name: 'Miracle Knots',     desc: 'Our signature knotless technique — ultra-lightweight, seamless at the root, and incredibly natural-looking. The ultimate protective style.' },
