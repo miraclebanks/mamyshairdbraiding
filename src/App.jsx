@@ -577,9 +577,9 @@ const reviews = [
     text: 'Awesome service, beautiful braids! Very comfortable setting! Will definitely return soon!',
   },
   {
-    name: 'Verified Yelp Reviewer',
+    name: 'Crystal R.',
     stars: 5,
-    text: 'Add your 6th favorite Yelp review here — just open src/App.jsx and update this entry with the real name and text.',
+    text: "I've known Mamy for almost 15 years, and she's been doing my braids since. I wouldn't go anywhere else. Mamy is such a sweet and kind stylist who works hard to create the style you want. She's very quick, neat and professional with her work. Thank you so much Mamy and see you again soon.",
   },
 ]
 
