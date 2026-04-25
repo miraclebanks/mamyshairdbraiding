@@ -640,6 +640,120 @@ function Reviews() {
   )
 }
 
+/* ─── Gallery ───────────────────────────────────────────
+   To add your own photos/videos:
+   1. Drop files into  public/gallery/
+   2. Add entries to the array below:
+      { src: '/gallery/my-photo.jpg', type: 'image', caption: 'Box braids' }
+      { src: '/gallery/my-video.mp4', type: 'video', caption: 'Tutorial' }
+   3. Save — the grid updates automatically.
+───────────────────────────────────────────────────────── */
+const galleryItems = [
+  { src: 'https://images.unsplash.com/photo-1560869713-7d0a29430803?w=600&q=80&fit=crop', type: 'image', caption: 'Box Braids' },
+  { src: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=600&q=80&fit=crop', type: 'image', caption: 'Braided Style' },
+  { src: 'https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?w=600&q=80&fit=crop', type: 'image', caption: 'Protective Style' },
+  { src: 'https://images.unsplash.com/photo-1596178065887-1198b6148b2b?w=600&q=80&fit=crop', type: 'image', caption: 'Cornrows' },
+  { src: 'https://images.unsplash.com/photo-1519699047748-de8e457a634e?w=600&q=80&fit=crop', type: 'image', caption: 'Natural Look' },
+  { src: 'https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=600&q=80&fit=crop', type: 'image', caption: 'Goddess Braids' },
+  { src: 'https://images.unsplash.com/photo-1562572159-4efd90078229?w=600&q=80&fit=crop', type: 'image', caption: 'Locs' },
+  { src: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=600&q=80&fit=crop', type: 'image', caption: 'Studio Look' },
+  { src: 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=600&q=80&fit=crop', type: 'image', caption: 'Hair Art' },
+]
+
+function GalleryItem({ item, onClick }) {
+  return (
+    <div className="gallery-item" onClick={() => onClick(item)}>
+      {item.type === 'video' ? (
+        <video src={item.src} muted playsInline loop className="gallery-media"
+          onMouseEnter={e => e.target.play()} onMouseLeave={e => { e.target.pause(); e.target.currentTime = 0 }}
+        />
+      ) : (
+        <img src={item.src} alt={item.caption} className="gallery-media" loading="lazy" />
+      )}
+      <div className="gallery-overlay">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+        </svg>
+        {item.type === 'video' && (
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="white" style={{ position: 'absolute', top: 10, right: 10 }}>
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        )}
+        <span className="gallery-caption">{item.caption}</span>
+      </div>
+    </div>
+  )
+}
+
+function Lightbox({ item, onClose, onPrev, onNext }) {
+  useEffect(() => {
+    const handler = e => {
+      if (e.key === 'Escape') onClose()
+      if (e.key === 'ArrowLeft') onPrev()
+      if (e.key === 'ArrowRight') onNext()
+    }
+    window.addEventListener('keydown', handler)
+    return () => window.removeEventListener('keydown', handler)
+  }, [onClose, onPrev, onNext])
+
+  return (
+    <div className="lightbox" onClick={onClose}>
+      <button className="lightbox-close" onClick={onClose} aria-label="Close">✕</button>
+      <button className="lightbox-prev" onClick={e => { e.stopPropagation(); onPrev() }} aria-label="Previous">‹</button>
+      <div className="lightbox-content" onClick={e => e.stopPropagation()}>
+        {item.type === 'video' ? (
+          <video src={item.src} controls autoPlay className="lightbox-media" />
+        ) : (
+          <img src={item.src} alt={item.caption} className="lightbox-media" />
+        )}
+        {item.caption && <p className="lightbox-caption">{item.caption}</p>}
+      </div>
+      <button className="lightbox-next" onClick={e => { e.stopPropagation(); onNext() }} aria-label="Next">›</button>
+    </div>
+  )
+}
+
+function Gallery() {
+  const [active, setActive] = useState(null)
+  const idx = galleryItems.indexOf(active)
+
+  const close = () => setActive(null)
+  const prev  = () => setActive(galleryItems[(idx - 1 + galleryItems.length) % galleryItems.length])
+  const next  = () => setActive(galleryItems[(idx + 1) % galleryItems.length])
+
+  return (
+    <>
+      <section className="gallery-section" id="gallery">
+        <div className="container">
+          <FadeUp className="gallery-header">
+            <span className="section-label">Our Work</span>
+            <h2 className="section-heading">Style Gallery</h2>
+            <div className="divider" />
+            <p style={{ color: 'var(--muted)', maxWidth: 480, marginBottom: 48 }}>
+              A look at some of the styles we've created. Follow us on Instagram for more.
+            </p>
+          </FadeUp>
+          <div className="gallery-grid">
+            {galleryItems.map((item, i) => (
+              <GalleryItem key={i} item={item} onClick={setActive} />
+            ))}
+          </div>
+          <div style={{ textAlign: 'center', marginTop: 48 }}>
+            <a href="https://www.instagram.com/touche_sd/" target="_blank" rel="noopener noreferrer" className="btn btn-dark-outline">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+              </svg>
+              Follow @touche_sd on Instagram
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {active && <Lightbox item={active} onClose={close} onPrev={prev} onNext={next} />}
+    </>
+  )
+}
+
 /* ─── App ────────────────────────────────────────────── */
 export default function App() {
   return (
@@ -655,6 +769,7 @@ export default function App() {
       <About />
       <Services />
       <Social />
+      <Gallery />
       <Locations />
       <Payment />
       <ContactForm />
