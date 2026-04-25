@@ -258,29 +258,27 @@ function Social() {
         <h2 className="section-heading">Find Us on Social</h2>
         <p className="social-sub">Follow Mamy for style inspiration, behind-the-scenes looks, and exclusive specials.</p>
         <div className="social-cards">
-          <div className="social-card">
-            <div className="social-badge">Coming Soon</div>
+          <a className="social-card" href="https://www.tiktok.com/@mamybenju1" target="_blank" rel="noopener noreferrer">
             <div className="social-icon-wrap tiktok">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
                 <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.67a8.18 8.18 0 004.78 1.52V6.74a4.85 4.85 0 01-1.01-.05z"/>
               </svg>
             </div>
             <span className="social-card-name">TikTok</span>
-            <span className="social-card-handle">@mamyshairbraiding</span>
-            <span className="social-coming">Connect Soon</span>
-          </div>
+            <span className="social-card-handle">@mamybenju1</span>
+            <span className="social-coming">Follow Us →</span>
+          </a>
 
-          <div className="social-card">
-            <div className="social-badge">Coming Soon</div>
+          <a className="social-card" href="https://www.instagram.com/touche_sd/" target="_blank" rel="noopener noreferrer">
             <div className="social-icon-wrap instagram">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
                 <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
               </svg>
             </div>
             <span className="social-card-name">Instagram</span>
-            <span className="social-card-handle">@mamyshairbraiding</span>
-            <span className="social-coming">Connect Soon</span>
-          </div>
+            <span className="social-card-handle">@touche_sd</span>
+            <span className="social-coming">Follow Us →</span>
+          </a>
 
           <a className="social-card" href={YELP_URL} target="_blank" rel="noopener noreferrer">
             <div className="social-icon-wrap yelp">
@@ -489,16 +487,16 @@ function Footer() {
               African Hair Braiding by Mamy — San Diego and Orange County's trusted destination for expert braiding, custom wigs, microblading, and eyelash extensions. 15+ years of artistry.
             </p>
             <div className="footer-socials">
-              <button className="footer-social-btn" title="TikTok — Coming Soon" onClick={() => alert('TikTok coming soon!')}>
+              <a className="footer-social-btn" href="https://www.tiktok.com/@mamybenju1" target="_blank" rel="noopener noreferrer" title="TikTok">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.67a8.18 8.18 0 004.78 1.52V6.74a4.85 4.85 0 01-1.01-.05z"/>
                 </svg>
-              </button>
-              <button className="footer-social-btn" title="Instagram — Coming Soon" onClick={() => alert('Instagram coming soon!')}>
+              </a>
+              <a className="footer-social-btn" href="https://www.instagram.com/touche_sd/" target="_blank" rel="noopener noreferrer" title="Instagram">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
                 </svg>
-              </button>
+              </a>
               <a className="footer-social-btn" href={YELP_URL} target="_blank" rel="noopener noreferrer" title="Yelp reviews">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M20.16 12.73l-4.417 1.22c-.934.26-1.645-.8-1.094-1.596l2.454-3.593a1.063 1.063 0 011.664-.124c.718.737 1.86 2.348 1.66 3.425a.95.95 0 01-.267.668zM12.24 9.38l-.8-4.544c-.17-.957.869-1.65 1.698-1.145 1.037.625 2.627 1.91 2.9 3.003.08.32.018.658-.17.924L13.81 9.74c-.56.786-1.74.437-1.57-.36zm-1.638 2.382l-4.338-1.8c-.918-.38-.924-1.666-.009-2.054 1.131-.48 3.048-.928 4.101-.434.306.143.534.41.624.733l.578 2.073c.245.878-.612 1.653-1.462 1.117l.506.365zm.48 2.038l-1.2 4.427c-.254.936-1.453 1.09-1.916.236-.574-1.063-1.15-2.99-.765-4.062.11-.306.34-.553.638-.677l1.983-.804c.84-.34 1.712.46 1.26 1.13v-.25zm2.41 1.2l3.214 3.292c.68.698.157 1.82-.798 1.776-1.172-.055-3.075-.505-3.79-1.419a1.063 1.063 0 01-.2-.97l.6-2.108c.253-.892 1.424-1.02 1.974-.57z"/>
@@ -553,34 +551,34 @@ function Footer() {
 /* ─── Reviews ────────────────────────────────────────── */
 const reviews = [
   {
-    name: 'Jasmine T.',
+    name: 'Nancy E.',
     stars: 5,
-    date: 'March 2025',
-    text: 'Mamy is absolutely incredible! My box braids came out perfect — exactly what I asked for. She was gentle with my hair and the salon is clean and welcoming. I drive all the way from Chula Vista and it is 100% worth it every single time.',
+    text: 'Mamy is the real deal. My hair is on point! I have had my hair done by 2 ladies at this location so far. My goal is to rotate in the shop, because they are honestly good at what they do.',
   },
   {
-    name: 'Priya R.',
+    name: 'Jazmin D.',
     stars: 5,
-    date: 'January 2025',
-    text: 'I got Senegalese twists and I am obsessed. Mamy took her time to make sure every twist was flawless. She is so talented and personable — I felt comfortable from the moment I walked in. Already booked my next appointment!',
+    text: 'I have been going to Mamy since I was in high school (10 years). My sister and mother also have gone to her for that long and she is by far the best braiding stylist in SD!',
   },
   {
-    name: 'Keisha M.',
+    name: 'Micah S.',
     stars: 5,
-    date: 'December 2024',
-    text: 'Best braider in San Diego, hands down. I have been coming to Mamy for over two years for my locs and she never disappoints. The atmosphere is calm, she is always on time, and my hair looks amazing every single visit.',
+    text: 'I went to Mamy for a touch up and once again, she got me looking right. I had the front half of my braids redone and she had me in and out in about an hour and a half.',
   },
   {
-    name: 'Angela V.',
+    name: 'Gail B.',
     stars: 5,
-    date: 'October 2024',
-    text: 'Came in for microblading and left with the most natural-looking brows I have ever had. Mamy is licensed and clearly knows what she is doing. Very precise, very professional. My friends keep asking who did my brows!',
+    text: 'This was the 1st time I had gotten my hair braided in a very long time so believe me I did research before choosing a stylist. I loved my experience here with Mamy. She is an amazing professional.',
   },
   {
-    name: 'Tiara W.',
+    name: 'Akeela B.',
     stars: 5,
-    date: 'August 2024',
-    text: 'Got knotless box braids and they are so lightweight and neat. Mamy listened to exactly what I wanted and delivered. The price is fair for the quality of work. Will not go anywhere else!',
+    text: 'Awesome service, beautiful braids! Very comfortable setting! Will definitely return soon!',
+  },
+  {
+    name: 'Verified Yelp Reviewer',
+    stars: 5,
+    text: 'Add your 6th favorite Yelp review here — just open src/App.jsx and update this entry with the real name and text.',
   },
 ]
 
@@ -617,10 +615,7 @@ function Reviews() {
             <FadeUp key={r.name} className="review-card" style={{ transitionDelay: `${i * 0.07}s` }}>
               <div className="review-top">
                 <div className="review-avatar">{r.name.charAt(0)}</div>
-                <div>
-                  <div className="review-name">{r.name}</div>
-                  <div className="review-date">{r.date}</div>
-                </div>
+                <div className="review-name">{r.name}</div>
                 <Stars count={r.stars} />
               </div>
               <p className="review-text">"{r.text}"</p>

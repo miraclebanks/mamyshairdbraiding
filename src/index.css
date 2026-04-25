@@ -648,7 +648,7 @@ nav {
   color: var(--muted);
   margin-top: 2px;
 }
-.review-top span { margin-left: auto; }
+.review-top > span:last-child { margin-left: auto; }
 .review-text {
   font-size: 0.9rem;
   color: var(--muted);
@@ -946,6 +946,8 @@ footer {
 
 /* ─── RESPONSIVE ─────────────────────────────────────── */
 @media (max-width: 900px) {
+  .review-card:nth-child(n+4) { display: none; }
+
   .nav-links, .nav-cta { display: none; }
   .nav-toggle { display: flex; }
   .about-grid { grid-template-columns: 1fr; gap: 64px; }
