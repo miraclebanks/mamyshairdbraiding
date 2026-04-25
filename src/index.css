@@ -621,6 +621,55 @@ nav {
   transition: opacity 0.3s ease;
 }
 .gallery-item:hover .gallery-overlay { opacity: 1; }
+/* loading shimmer */
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+.gallery-skeleton {
+  background: linear-gradient(90deg, var(--sand) 25%, var(--terra-pale) 50%, var(--sand) 75%);
+  background-size: 800px 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+  cursor: default;
+}
+.gallery-placeholder {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 64px 24px;
+  border: 1px dashed var(--border);
+  border-radius: var(--r);
+  color: var(--muted);
+  text-align: center;
+  font-size: 0.9rem;
+}
+/* lightbox footer */
+.lightbox-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+.lightbox-ig-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 100px;
+  color: rgba(255,255,255,0.7);
+  font-size: 13px;
+  font-weight: 500;
+  transition: border-color 0.2s, color 0.2s;
+}
+.lightbox-ig-link:hover {
+  border-color: rgba(255,255,255,0.5);
+  color: var(--white);
+}
 .gallery-caption {
   position: absolute;
   bottom: 14px;

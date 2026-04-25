@@ -640,73 +640,64 @@ function Reviews() {
   )
 }
 
-/* ─── Gallery ───────────────────────────────────────────
-   To add your own photos/videos:
-   1. Drop files into  public/gallery/
-   2. Add entries to the array below:
-      { src: '/gallery/my-photo.jpg', type: 'image', caption: 'Box braids' }
-      { src: '/gallery/my-video.mp4', type: 'video', caption: 'Tutorial' }
-   3. Save — the grid updates automatically.
-───────────────────────────────────────────────────────── */
-const galleryItems = [
-  { src: 'https://images.unsplash.com/photo-1560869713-7d0a29430803?w=600&q=80&fit=crop', type: 'image', caption: 'Box Braids' },
-  { src: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=600&q=80&fit=crop', type: 'image', caption: 'Braided Style' },
-  { src: 'https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?w=600&q=80&fit=crop', type: 'image', caption: 'Protective Style' },
-  { src: 'https://images.unsplash.com/photo-1596178065887-1198b6148b2b?w=600&q=80&fit=crop', type: 'image', caption: 'Cornrows' },
-  { src: 'https://images.unsplash.com/photo-1519699047748-de8e457a634e?w=600&q=80&fit=crop', type: 'image', caption: 'Natural Look' },
-  { src: 'https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=600&q=80&fit=crop', type: 'image', caption: 'Goddess Braids' },
-  { src: 'https://images.unsplash.com/photo-1562572159-4efd90078229?w=600&q=80&fit=crop', type: 'image', caption: 'Locs' },
-  { src: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=600&q=80&fit=crop', type: 'image', caption: 'Studio Look' },
-  { src: 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=600&q=80&fit=crop', type: 'image', caption: 'Hair Art' },
-]
+/* ─── Instagram Gallery ──────────────────────────────── */
+const IG_TOKEN = import.meta.env.VITE_INSTAGRAM_TOKEN
+const IG_FIELDS = 'id,media_type,media_url,thumbnail_url,permalink,caption'
+const IG_LIMIT  = 12
+
+const IgIcon = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="white">
+    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+  </svg>
+)
 
 function GalleryItem({ item, onClick }) {
+  const isVideo = item.media_type === 'VIDEO' || item.media_type === 'CAROUSEL_ALBUM'
+  const src     = item.media_type === 'VIDEO' ? item.thumbnail_url : item.media_url
   return (
-    <div className="gallery-item" onClick={() => onClick(item)}>
-      {item.type === 'video' ? (
-        <video src={item.src} muted playsInline loop className="gallery-media"
-          onMouseEnter={e => e.target.play()} onMouseLeave={e => { e.target.pause(); e.target.currentTime = 0 }}
-        />
-      ) : (
-        <img src={item.src} alt={item.caption} className="gallery-media" loading="lazy" />
-      )}
+    <a className="gallery-item" href={item.permalink} target="_blank" rel="noopener noreferrer"
+      onClick={e => { e.preventDefault(); onClick(item) }}>
+      <img src={src} alt={item.caption?.slice(0, 60) || 'Instagram post'} className="gallery-media" loading="lazy" />
       <div className="gallery-overlay">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
-          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-        </svg>
-        {item.type === 'video' && (
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="white" style={{ position: 'absolute', top: 10, right: 10 }}>
+        <IgIcon />
+        {isVideo && (
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="white" style={{ position: 'absolute', top: 10, right: 10 }}>
             <path d="M8 5v14l11-7z"/>
           </svg>
         )}
-        <span className="gallery-caption">{item.caption}</span>
       </div>
-    </div>
+    </a>
   )
 }
 
 function Lightbox({ item, onClose, onPrev, onNext }) {
   useEffect(() => {
-    const handler = e => {
-      if (e.key === 'Escape') onClose()
-      if (e.key === 'ArrowLeft') onPrev()
-      if (e.key === 'ArrowRight') onNext()
+    const h = e => {
+      if (e.key === 'Escape')      onClose()
+      if (e.key === 'ArrowLeft')   onPrev()
+      if (e.key === 'ArrowRight')  onNext()
     }
-    window.addEventListener('keydown', handler)
-    return () => window.removeEventListener('keydown', handler)
+    window.addEventListener('keydown', h)
+    return () => window.removeEventListener('keydown', h)
   }, [onClose, onPrev, onNext])
 
+  const isVideo = item.media_type === 'VIDEO'
   return (
     <div className="lightbox" onClick={onClose}>
       <button className="lightbox-close" onClick={onClose} aria-label="Close">✕</button>
       <button className="lightbox-prev" onClick={e => { e.stopPropagation(); onPrev() }} aria-label="Previous">‹</button>
       <div className="lightbox-content" onClick={e => e.stopPropagation()}>
-        {item.type === 'video' ? (
-          <video src={item.src} controls autoPlay className="lightbox-media" />
+        {isVideo ? (
+          <video src={item.media_url} controls autoPlay playsInline className="lightbox-media" />
         ) : (
-          <img src={item.src} alt={item.caption} className="lightbox-media" />
+          <img src={item.media_url} alt={item.caption?.slice(0, 80) || ''} className="lightbox-media" />
         )}
-        {item.caption && <p className="lightbox-caption">{item.caption}</p>}
+        <div className="lightbox-footer">
+          {item.caption && <p className="lightbox-caption">{item.caption.slice(0, 120)}{item.caption.length > 120 ? '…' : ''}</p>}
+          <a href={item.permalink} target="_blank" rel="noopener noreferrer" className="lightbox-ig-link">
+            <IgIcon /> View on Instagram
+          </a>
+        </div>
       </div>
       <button className="lightbox-next" onClick={e => { e.stopPropagation(); onNext() }} aria-label="Next">›</button>
     </div>
@@ -714,12 +705,27 @@ function Lightbox({ item, onClose, onPrev, onNext }) {
 }
 
 function Gallery() {
+  const [items,  setItems]  = useState([])
+  const [status, setStatus] = useState('loading') // loading | ready | error | no-token
   const [active, setActive] = useState(null)
-  const idx = galleryItems.indexOf(active)
 
+  useEffect(() => {
+    if (!IG_TOKEN) { setStatus('no-token'); return }
+    fetch(`https://graph.instagram.com/me/media?fields=${IG_FIELDS}&limit=${IG_LIMIT}&access_token=${IG_TOKEN}`)
+      .then(r => r.json())
+      .then(data => {
+        if (data.error) throw new Error(data.error.message)
+        const visible = (data.data || []).filter(p => p.media_type !== 'CAROUSEL_ALBUM' || p.media_url)
+        setItems(visible)
+        setStatus('ready')
+      })
+      .catch(() => setStatus('error'))
+  }, [])
+
+  const idx   = items.indexOf(active)
   const close = () => setActive(null)
-  const prev  = () => setActive(galleryItems[(idx - 1 + galleryItems.length) % galleryItems.length])
-  const next  = () => setActive(galleryItems[(idx + 1) % galleryItems.length])
+  const prev  = () => setActive(items[(idx - 1 + items.length) % items.length])
+  const next  = () => setActive(items[(idx + 1) % items.length])
 
   return (
     <>
@@ -730,22 +736,43 @@ function Gallery() {
             <h2 className="section-heading">Style Gallery</h2>
             <div className="divider" />
             <p style={{ color: 'var(--muted)', maxWidth: 480, marginBottom: 48 }}>
-              A look at some of the styles we've created. Follow us on Instagram for more.
+              Fresh from our Instagram — real styles, real clients.
             </p>
           </FadeUp>
-          <div className="gallery-grid">
-            {galleryItems.map((item, i) => (
-              <GalleryItem key={i} item={item} onClick={setActive} />
-            ))}
-          </div>
-          <div style={{ textAlign: 'center', marginTop: 48 }}>
-            <a href="https://www.instagram.com/touche_sd/" target="_blank" rel="noopener noreferrer" className="btn btn-dark-outline">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-              </svg>
-              Follow @touche_sd on Instagram
-            </a>
-          </div>
+
+          {status === 'loading' && (
+            <div className="gallery-grid">
+              {Array.from({ length: 9 }).map((_, i) => (
+                <div key={i} className="gallery-item gallery-skeleton" />
+              ))}
+            </div>
+          )}
+
+          {status === 'ready' && (
+            <div className="gallery-grid">
+              {items.map((item) => (
+                <GalleryItem key={item.id} item={item} onClick={setActive} />
+              ))}
+            </div>
+          )}
+
+          {(status === 'error' || status === 'no-token') && (
+            <div className="gallery-placeholder">
+              <IgIcon />
+              <p>{status === 'no-token' ? 'Add your Instagram token to .env.local to load the gallery.' : 'Could not load Instagram posts. Token may need refreshing.'}</p>
+              <a href="https://www.instagram.com/touche_sd/" target="_blank" rel="noopener noreferrer" className="btn btn-dark-outline" style={{ marginTop: 16 }}>
+                View @touche_sd on Instagram
+              </a>
+            </div>
+          )}
+
+          {status === 'ready' && (
+            <div style={{ textAlign: 'center', marginTop: 48 }}>
+              <a href="https://www.instagram.com/touche_sd/" target="_blank" rel="noopener noreferrer" className="btn btn-dark-outline">
+                <IgIcon /> Follow @touche_sd on Instagram
+              </a>
+            </div>
+          )}
         </div>
       </section>
 
