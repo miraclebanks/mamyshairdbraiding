@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { width: 1200px; height: 630px; overflow: hidden; background: #1E0A06; }
+
+  .card {
+    width: 1200px;
+    height: 630px;
+    background: linear-gradient(135deg, #1E0A06 0%, #3A1810 55%, #5C2416 100%);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 72px 80px;
+    position: relative;
+    overflow: hidden;
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* decorative circles */
+  .orb1 {
+    position: absolute;
+    width: 520px; height: 520px;
+    border-radius: 50%;
+    background: rgba(196,98,45,0.14);
+    filter: blur(80px);
+    top: -120px; right: -80px;
+    pointer-events: none;
+  }
+  .orb2 {
+    position: absolute;
+    width: 280px; height: 280px;
+    border-radius: 50%;
+    background: rgba(217,132,90,0.1);
+    filter: blur(60px);
+    bottom: -60px; left: 200px;
+    pointer-events: none;
+  }
+
+  /* cross pattern */
+  .pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C4622D' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  .left {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    max-width: 620px;
+  }
+
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .eyebrow-line {
+    width: 36px; height: 1px;
+    background: #C4622D;
+  }
+  .eyebrow-text {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #D9845A;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 88px;
+    font-weight: 300;
+    line-height: 1.0;
+    color: #ffffff;
+    margin-bottom: 28px;
+  }
+  h1 em {
+    font-style: italic;
+    color: #D9845A;
+  }
+
+  .divider {
+    width: 48px; height: 2px;
+    background: #C4622D;
+    margin-bottom: 28px;
+  }
+
+  .tagline {
+    font-size: 18px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.6;
+    letter-spacing: 0.01em;
+  }
+
+  .right {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 20px;
+  }
+
+  .stat-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 20px;
+  }
+
+  .stat {
+    text-align: right;
+  }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px;
+    font-weight: 300;
+    color: #D9845A;
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    margin-top: 4px;
+  }
+
+  .stat-sep {
+    width: 1px;
+    height: 40px;
+    background: rgba(196,98,45,0.3);
+    align-self: flex-end;
+  }
+
+  .location-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border: 1px solid rgba(196,98,45,0.35);
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.05em;
+    margin-top: 8px;
+  }
+  .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #C4622D;
+  }
+
+  /* bottom url bar */
+  .url-bar {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 56px;
+    background: rgba(196,98,45,0.12);
+    border-top: 1px solid rgba(196,98,45,0.2);
+    display: flex;
+    align-items: center;
+    padding: 0 80px;
+    z-index: 3;
+  }
+  .url-text {
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.06em;
+  }
+  .url-text strong {
+    color: rgba(255,255,255,0.55);
+    font-weight: 600;
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="pattern"></div>
+    <div class="orb1"></div>
+    <div class="orb2"></div>
+
+    <div class="left">
+      <div class="eyebrow">
+        <div class="eyebrow-line"></div>
+        <span class="eyebrow-text">African Hair Braiding</span>
+      </div>
+      <h1>Mamy's<br /><em>Hair Braiding</em></h1>
+      <div class="divider"></div>
+      <p class="tagline">Expert braids, custom wigs, microblading<br />&amp; eyelash extensions · 15+ years of artistry</p>
+    </div>
+
+    <div class="right">
+      <div class="stat-block">
+        <div class="stat">
+          <div class="stat-num">15+</div>
+          <div class="stat-label">Years Experience</div>
+        </div>
+        <div class="stat-sep"></div>
+        <div class="stat">
+          <div class="stat-num">★★★★★</div>
+          <div class="stat-label">Yelp Rated</div>
+        </div>
+        <div class="stat-sep"></div>
+        <div class="stat">
+          <div class="stat-num">20+</div>
+          <div class="stat-label">Braid Styles</div>
+        </div>
+      </div>
+      <div class="location-tag">
+        <div class="dot"></div>
+        San Diego &amp; Orange County
+      </div>
+    </div>
+
+    <div class="url-bar">
+      <span class="url-text"><strong>mamyshairbraiding.com</strong> &nbsp;·&nbsp; By Appointment Only &nbsp;·&nbsp; Call (760) 402-9087</span>
+    </div>
+  </div>
+</body>
+</html>
