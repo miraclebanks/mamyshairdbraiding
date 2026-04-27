@@ -182,7 +182,7 @@ function About() {
           <FadeUp>
             <div className="about-img-wrap">
               <div className="about-img-frame">
-                <img src="/mamy-profile.jpg" alt="Mamy M." style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }} />
+                <img src="/mamy-profile.jpg" alt="Mamy M." style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: '50% 12%' }} />
               </div>
               <div className="about-badge">
                 <span className="about-badge-num">15+</span>
@@ -853,19 +853,22 @@ function Gallery() {
   const [active,  setActive]  = useState(null)
   const [cur,     setCur]     = useState(0)
   const [visible, setVisible] = useState(true)
-  const total = GALLERY_ITEMS.length
+  const total   = GALLERY_ITEMS.length
+  const pending = useRef(null)
 
   const advance = (delta = 1) => {
+    if (pending.current) return
     setVisible(false)
-    setTimeout(() => {
+    pending.current = setTimeout(() => {
       setCur(c => (c + delta + total) % total)
       setVisible(true)
-    }, 280)
+      pending.current = null
+    }, 300)
   }
 
   useEffect(() => {
     const t = setInterval(() => advance(), 4000)
-    return () => clearInterval(t)
+    return () => { clearInterval(t); clearTimeout(pending.current) }
   }, [])
 
   const slides  = [0, 1, 2].map(i => GALLERY_ITEMS[(cur + i) % total])
@@ -891,7 +894,7 @@ function Gallery() {
             <button className="slideshow-btn" onClick={() => advance(-1)} aria-label="Previous">&#8249;</button>
             <div className={`slideshow-slides${visible ? '' : ' slideshow-hidden'}`}>
               {slides.map((item, i) => (
-                <SlideItem key={`${cur}-${i}`} item={item} onClick={setActive} />
+                <SlideItem key={i} item={item} onClick={setActive} />
               ))}
             </div>
             <button className="slideshow-btn" onClick={() => advance(1)} aria-label="Next">&#8250;</button>
