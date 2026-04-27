@@ -388,8 +388,8 @@ function Payment() {
 const DAYS  = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
 const SLOTS = ['8:00 AM','10:00 AM','12:00 PM','2:00 PM','4:00 PM','6:00 PM','8:00 PM']
 
-const WEB3FORMS_KEY = 'YOUR_WEB3FORMS_ACCESS_KEY' // get free key at web3forms.com
-const CONTACT_EMAIL = 'miracle.emails@gmail.com'
+const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY
+const CONTACT_EMAIL = import.meta.env.VITE_CONTACT_EMAIL
 
 function ContactForm() {
   const [form,       setForm]       = useState({ name: '', email: '', service: '', message: '' })
