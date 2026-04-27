@@ -389,7 +389,7 @@ const DAYS  = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Su
 const SLOTS = ['8:00 AM','10:00 AM','12:00 PM','2:00 PM','4:00 PM','6:00 PM','8:00 PM']
 
 const WEB3FORMS_KEY = 'YOUR_WEB3FORMS_ACCESS_KEY' // get free key at web3forms.com
-const CONTACT_EMAIL = 'mamy@africanhairbraiding.com'
+const CONTACT_EMAIL = 'miracle.emails@gmail.com'
 
 function ContactForm() {
   const [form,       setForm]       = useState({ name: '', email: '', service: '', message: '' })
