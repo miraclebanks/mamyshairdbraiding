@@ -6,7 +6,6 @@ const LOGO_URL = 'https://mamyshairbraiding.com/wp-content/uploads/2019/05/Mamy-
 
 /* warm tan — sepia shifts the pink to a sandy tan */
 const LOGO_FILTER_NAV    = 'sepia(1) saturate(1.4) hue-rotate(10deg) brightness(0.88)'
-const LOGO_FILTER_FOOTER = 'sepia(1) saturate(1.2) hue-rotate(10deg) brightness(1.5)'
 
 const services = [
   { icon: '✦',  name: 'Miracle Knots',     desc: 'Our signature knotless technique — ultra-lightweight, seamless at the root, and incredibly natural-looking. The ultimate protective style.' },
@@ -602,7 +601,7 @@ function Footer() {
         <div className="footer-grid">
           <div>
             <div style={{ marginBottom: 20 }}>
-              <img src={LOGO_URL} alt="Mamy's Hair Braiding" style={{ height: 52, width: 'auto', filter: LOGO_FILTER_FOOTER }} />
+              <img src={LOGO_URL} alt="Mamy's Hair Braiding" style={{ height: 52, width: 'auto', filter: LOGO_FILTER_NAV }} />
             </div>
             <p className="footer-brand-text">
               African Hair Braiding by Mamy — San Diego and Orange County's trusted destination for expert braiding, custom wigs, microblading, and eyelash extensions. 20+ years of artistry.
