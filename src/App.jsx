@@ -4,8 +4,8 @@ const PHONE_HREF = 'tel:7604029087'
 const YELP_URL   = 'https://www.yelp.com/biz/african-hair-braiding-by-mamy-san-diego-3?osq=mamys+hair+braiding&override_cta=Request+an+appointment'
 const LOGO_URL = 'https://mamyshairbraiding.com/wp-content/uploads/2019/05/Mamy-Hair-Braiding-San-DIego-Logo-2.png'
 
-/* warm tan — sepia shifts the pink to a sandy tan */
-const LOGO_FILTER_NAV    = 'sepia(1) saturate(1.4) hue-rotate(10deg) brightness(0.88)'
+const LOGO_FILTER_NAV    = 'sepia(1) saturate(2.8) hue-rotate(5deg) brightness(0.62) contrast(1.1)'
+const LOGO_FILTER_FOOTER = 'sepia(1) saturate(1.4) hue-rotate(10deg) brightness(0.88)'
 
 const services = [
   { icon: '✦',  name: 'Miracle Knots',     desc: 'Our signature knotless technique — ultra-lightweight, seamless at the root, and incredibly natural-looking. The ultimate protective style.' },
@@ -223,7 +223,7 @@ function Services() {
           <span className="section-label">What We Offer</span>
           <h2 className="section-heading">Hair &amp; Beauty Services</h2>
           <div className="divider" />
-          <p className="services-intro">From classic African braids to modern beauty treatments — if you don't see a style you love, just ask. Free consultations available.</p>
+          <p className="services-intro">From classic African braids to modern beauty treatments, if you don't see a style you love, just ask. Free consultations available.</p>
         </FadeUp>
         <div className="services-grid">
           {services.map(({ icon, name, desc }) => (
@@ -601,7 +601,7 @@ function Footer() {
         <div className="footer-grid">
           <div>
             <div style={{ marginBottom: 20 }}>
-              <img src={LOGO_URL} alt="Mamy's Hair Braiding" style={{ height: 52, width: 'auto', filter: LOGO_FILTER_NAV }} />
+              <img src={LOGO_URL} alt="Mamy's Hair Braiding" style={{ height: 52, width: 'auto', filter: LOGO_FILTER_FOOTER }} />
             </div>
             <p className="footer-brand-text">
               African Hair Braiding by Mamy — San Diego and Orange County's trusted destination for expert braiding, custom wigs, microblading, and eyelash extensions. 20+ years of artistry.
