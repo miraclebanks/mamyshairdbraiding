@@ -807,9 +807,9 @@ const PlayIcon = () => (
   </svg>
 )
 
-function GalleryItem({ item, onClick }) {
+function SlideItem({ item, onClick }) {
   return (
-    <button className="gallery-item" onClick={() => onClick(item)} aria-label="View photo">
+    <button className="gallery-item slideshow-item" onClick={() => onClick(item)} aria-label="View photo">
       {item.type === 'video' ? (
         <video src={item.src} muted playsInline preload="metadata" className="gallery-media" />
       ) : (
@@ -850,12 +850,29 @@ function Lightbox({ item, onClose, onPrev, onNext }) {
 }
 
 function Gallery() {
-  const [active, setActive] = useState(null)
-  const items = GALLERY_ITEMS
-  const idx   = items.indexOf(active)
-  const close = () => setActive(null)
-  const prev  = () => setActive(items[(idx - 1 + items.length) % items.length])
-  const next  = () => setActive(items[(idx + 1) % items.length])
+  const [active,  setActive]  = useState(null)
+  const [cur,     setCur]     = useState(0)
+  const [visible, setVisible] = useState(true)
+  const total = GALLERY_ITEMS.length
+
+  const advance = (delta = 1) => {
+    setVisible(false)
+    setTimeout(() => {
+      setCur(c => (c + delta + total) % total)
+      setVisible(true)
+    }, 280)
+  }
+
+  useEffect(() => {
+    const t = setInterval(() => advance(), 4000)
+    return () => clearInterval(t)
+  }, [])
+
+  const slides  = [0, 1, 2].map(i => GALLERY_ITEMS[(cur + i) % total])
+  const lbIdx   = active ? GALLERY_ITEMS.findIndex(x => x.id === active.id) : -1
+  const lbClose = () => setActive(null)
+  const lbPrev  = () => setActive(GALLERY_ITEMS[(lbIdx - 1 + total) % total])
+  const lbNext  = () => setActive(GALLERY_ITEMS[(lbIdx + 1) % total])
 
   return (
     <>
@@ -870,9 +887,24 @@ function Gallery() {
             </p>
           </FadeUp>
 
-          <div className="gallery-grid">
-            {items.map(item => (
-              <GalleryItem key={item.id} item={item} onClick={setActive} />
+          <div className="slideshow-wrap">
+            <button className="slideshow-btn" onClick={() => advance(-1)} aria-label="Previous">&#8249;</button>
+            <div className={`slideshow-slides${visible ? '' : ' slideshow-hidden'}`}>
+              {slides.map((item, i) => (
+                <SlideItem key={`${cur}-${i}`} item={item} onClick={setActive} />
+              ))}
+            </div>
+            <button className="slideshow-btn" onClick={() => advance(1)} aria-label="Next">&#8250;</button>
+          </div>
+
+          <div className="slideshow-dots">
+            {GALLERY_ITEMS.map((_, i) => (
+              <button
+                key={i}
+                className={`slideshow-dot${i === cur ? ' active' : ''}`}
+                onClick={() => advance(i - cur)}
+                aria-label={`Go to slide ${i + 1}`}
+              />
             ))}
           </div>
 
@@ -884,7 +916,7 @@ function Gallery() {
         </div>
       </section>
 
-      {active && <Lightbox item={active} onClose={close} onPrev={prev} onNext={next} />}
+      {active && <Lightbox item={active} onClose={lbClose} onPrev={lbPrev} onNext={lbNext} />}
     </>
   )
 }
