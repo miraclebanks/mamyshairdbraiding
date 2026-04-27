@@ -662,7 +662,7 @@ function Footer() {
 
         <div className="footer-bottom">
           <p className="footer-copy">© 2025 African Hair Braiding by Mamy · San Diego &amp; Orange County</p>
-          <p className="footer-copy">Designed with ♥ · <a href="#contact-form">Book an Appointment</a></p>
+          <p className="footer-copy"><a href="https://www.linkedin.com/in/miraclebanks/" target="_blank" rel="noopener noreferrer">Powered by Miracles♥</a> ·<a href="#contact-form">Book an Appointment</a></p>
         </div>
       </div>
     </footer>
