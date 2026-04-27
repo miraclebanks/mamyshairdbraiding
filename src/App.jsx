@@ -132,7 +132,7 @@ function Hero() {
             African Hair<br /><em>Braiding</em><br />by Mamy
           </h1>
           <p className="hero-sub">
-            15+ years of artistry. Expert braids, custom wigs, microblading, and eyelash extensions — crafted with care for every client.
+            20+ years of artistry. Expert braids, custom wigs, microblading, and eyelash extensions — crafted with care for every client.
           </p>
           <div className="hero-actions">
             <a href="#contact-form" className="btn btn-primary"><CalIcon /> Book Appointment</a>
@@ -157,7 +157,7 @@ function Stats() {
       <div className="container">
         <div className="stats-grid">
           {[
-            { n: '15+',    l: 'Years of Experience' },
+            { n: '20+',    l: 'Years of Experience' },
             { n: '20+',    l: 'Braid Styles' },
             { n: '2',      l: 'Locations' },
             { n: '★★★★★', l: 'Yelp Reviews' },
@@ -185,7 +185,7 @@ function About() {
                 <img src="/mamy-profile.jpg" alt="Mamy M." style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: '50% 12%' }} />
               </div>
               <div className="about-badge">
-                <span className="about-badge-num">15+</span>
+                <span className="about-badge-num">20+</span>
                 <span className="about-badge-text">Years<br />Expert</span>
               </div>
             </div>
@@ -196,13 +196,13 @@ function About() {
               <h2 className="section-heading">Mamy M.</h2>
               <div className="divider" />
               <p>
-                With over 15 years of experience, Mamy is a master braider and licensed beauty stylist serving clients throughout San Diego, Oceanside, Orange County, and the surrounding area.
+                With over 20 years of experience, Mamy is a master braider and licensed beauty stylist serving clients throughout San Diego, Oceanside, Orange County, and the surrounding area.
               </p>
               <p>
                 Her passion for African hair artistry, attention to detail, and warm chair-side manner have built a loyal clientele who trust her with their most precious accessory. Whether you come in for intricate box braids or a microblading session, you leave feeling like your best self.
               </p>
               <div className="about-tags">
-                {['Master Braider', 'Licensed Microblading', 'Eyelash Extensions', 'Custom Wigs', '15+ Years'].map(t => (
+                {['Master Braider', 'Licensed Microblading', 'Eyelash Extensions', 'Custom Wigs', '20+ Years'].map(t => (
                   <span key={t} className="tag">{t}</span>
                 ))}
               </div>
@@ -605,7 +605,7 @@ function Footer() {
               <img src={LOGO_URL} alt="Mamy's Hair Braiding" style={{ height: 52, width: 'auto', filter: LOGO_FILTER_FOOTER }} />
             </div>
             <p className="footer-brand-text">
-              African Hair Braiding by Mamy — San Diego and Orange County's trusted destination for expert braiding, custom wigs, microblading, and eyelash extensions. 15+ years of artistry.
+              African Hair Braiding by Mamy — San Diego and Orange County's trusted destination for expert braiding, custom wigs, microblading, and eyelash extensions. 20+ years of artistry.
             </p>
             <div className="footer-socials">
               <a className="footer-social-btn" href="https://www.tiktok.com/@mamybenju1" target="_blank" rel="noopener noreferrer" title="TikTok">
