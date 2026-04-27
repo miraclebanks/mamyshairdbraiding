@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Logo Preview — Mamy's Hair Braiding</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Inter, sans-serif; background: #F0E4D8; }
+    h1 { text-align: center; padding: 40px 0 8px; font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 2rem; color: #1E0A06; }
+    p  { text-align: center; color: #7A3820; font-size: 13px; letter-spacing: .08em; margin-bottom: 48px; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; max-width: 900px; margin: 0 auto 60px; }
+    .card { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 40px; gap: 24px; }
+    .card.light-bg  { background: #FDF5EE; }
+    .card.dark-bg   { background: #1E0A06; }
+    .card img { width: 200px; }
+    .label { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; font-weight: 600; }
+    .card.light-bg .label { color: #9A6050; }
+    .card.dark-bg  .label { color: rgba(255,255,255,.4); }
+
+    /* Small usage demos */
+    .demos { max-width: 900px; margin: 0 auto 80px; padding: 0 24px; }
+    .demos h2 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 1.4rem; color: #1E0A06; margin-bottom: 24px; }
+    .demo-row { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; margin-bottom: 16px; }
+    .demo-chip { display: flex; align-items: center; gap: 10px; padding: 8px 20px; border-radius: 4px; }
+    .demo-chip img { height: 32px; width: auto; }
+    .demo-chip.on-cream { background: #FDF5EE; border: 1px solid rgba(196,98,45,.2); }
+    .demo-chip.on-dark  { background: #3A1810; }
+    .demo-chip.on-terra { background: #C4622D; }
+    .demo-chip span { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 300; }
+    .demo-chip.on-cream span { color: #1E0A06; }
+    .demo-chip.on-dark  span { color: #FDF5EE; }
+    .demo-chip.on-terra span { color: #FDF5EE; }
+  </style>
+</head>
+<body>
+  <h1>Mamy's Hair Braiding — Logo</h1>
+  <p>Trident mark with woven braid band · Terracotta palette</p>
+
+  <div class="grid">
+    <div class="card light-bg">
+      <img src="/logo.svg" alt="Logo on light background"/>
+      <span class="label">On Cream / White</span>
+    </div>
+    <div class="card dark-bg">
+      <img src="/logo-light.svg" alt="Logo on dark background"/>
+      <span class="label">On Dark / Hero</span>
+    </div>
+  </div>
+
+  <div class="demos">
+    <h2>Usage in context</h2>
+    <div class="demo-row">
+      <div class="demo-chip on-cream">
+        <img src="/logo.svg" alt=""/>
+      </div>
+      <div class="demo-chip on-dark">
+        <img src="/logo-light.svg" alt=""/>
+      </div>
+      <div class="demo-chip on-terra">
+        <img src="/logo-light.svg" alt=""/>
+      </div>
+    </div>
+    <p style="text-align:left;font-size:12px;color:#9A6050;margin-top:8px;">
+      Left to right: nav bar (cream) · hero / dark section · terracotta background
+    </p>
+  </div>
+</body>
+</html>

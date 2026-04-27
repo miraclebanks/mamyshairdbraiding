@@ -182,12 +182,7 @@ function About() {
           <FadeUp>
             <div className="about-img-wrap">
               <div className="about-img-frame">
-                <div className="about-img-placeholder">
-                  <svg width="64" height="64" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="0.8">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                  </svg>
-                  <span style={{ fontSize: 12, letterSpacing: '.1em', textTransform: 'uppercase' }}>Add Photo of Mamy</span>
-                </div>
+                <img src="/mamy-profile.jpg" alt="Mamy M." style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }} />
               </div>
               <div className="about-badge">
                 <span className="about-badge-num">15+</span>
@@ -391,11 +386,72 @@ function Payment() {
 }
 
 /* ─── Contact Form ───────────────────────────────────── */
+const DAYS  = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
+const SLOTS = ['8:00 AM','10:00 AM','12:00 PM','2:00 PM','4:00 PM','6:00 PM','8:00 PM']
+
+const WEB3FORMS_KEY = 'YOUR_WEB3FORMS_ACCESS_KEY' // get free key at web3forms.com
+const CONTACT_EMAIL = 'mamy@africanhairbraiding.com'
+
 function ContactForm() {
-  const [form, setForm] = useState({ name: '', email: '', service: '', message: '' })
-  const [sent, setSent] = useState(false)
+  const [form,       setForm]       = useState({ name: '', email: '', service: '', message: '' })
+  const [days,       setDays]       = useState([])
+  const [sameHours,  setSameHours]  = useState(true)
+  const [sharedSlots,setSharedSlots]= useState([])
+  const [slotsByDay, setSlotsByDay] = useState({})
+  const [sent,       setSent]       = useState(false)
+  const [loading,    setLoading]    = useState(false)
+  const [error,      setError]      = useState('')
+
   const change = e => setForm(f => ({ ...f, [e.target.name]: e.target.value }))
-  const submit = e => { e.preventDefault(); setSent(true) }
+
+  const toggleDay = day => setDays(prev =>
+    prev.includes(day) ? prev.filter(d => d !== day) : [...prev, day]
+  )
+
+  const toggleSharedSlot = slot => setSharedSlots(prev =>
+    prev.includes(slot) ? prev.filter(s => s !== slot) : [...prev, slot]
+  )
+
+  const toggleDaySlot = (day, slot) => setSlotsByDay(prev => {
+    const cur = prev[day] || []
+    return { ...prev, [day]: cur.includes(slot) ? cur.filter(s => s !== slot) : [...cur, slot] }
+  })
+
+  const submit = async e => {
+    e.preventDefault()
+    setLoading(true)
+    setError('')
+
+    const hoursText = days.length === 0 ? 'Not specified' :
+      sameHours || days.length === 1
+        ? `${days.join(', ')}: ${sharedSlots.join(', ') || 'Any'}`
+        : days.map(d => `${d}: ${(slotsByDay[d] || []).join(', ') || 'Any'}`).join(' | ')
+
+    const body = new FormData()
+    body.append('access_key', WEB3FORMS_KEY)
+    body.append('to', CONTACT_EMAIL)
+    body.append('subject', `New Booking Request – ${form.service || 'General Inquiry'}`)
+    body.append('from_name', form.name)
+    body.append('name', form.name)
+    body.append('email', form.email)
+    body.append('service', form.service || 'Not specified')
+    body.append('availability', hoursText)
+    body.append('message', form.message)
+
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body })
+      const data = await res.json()
+      if (data.success) {
+        setSent(true)
+      } else {
+        setError('Something went wrong. Please try again or call us directly.')
+      }
+    } catch {
+      setError('Could not send message. Please try again or call us directly.')
+    } finally {
+      setLoading(false)
+    }
+  }
 
   return (
     <section className="contact-section" id="contact-form">
@@ -419,7 +475,7 @@ function ContactForm() {
           </FadeUp>
         ) : (
           <FadeUp style={{ transitionDelay: '0.1s' }}>
-            <form onSubmit={submit} style={{ maxWidth: 580, display: 'flex', flexDirection: 'column', gap: 20 }}>
+            <form onSubmit={submit} style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
               <div className="form-row">
                 <div className="form-field">
                   <label className="form-label">Name</label>
@@ -430,6 +486,7 @@ function ContactForm() {
                   <input className="form-input" name="email" type="email" required value={form.email} onChange={change} placeholder="your@email.com" />
                 </div>
               </div>
+
               <div className="form-field">
                 <label className="form-label">Service Interested In</label>
                 <select className="form-input" name="service" value={form.service} onChange={change}>
@@ -440,12 +497,75 @@ function ContactForm() {
                   <option value="Other">Other / Not sure yet</option>
                 </select>
               </div>
+
+              {/* ── Availability ── */}
+              <div className="form-field">
+                <label className="form-label">Preferred Days</label>
+                <div className="avail-days">
+                  {DAYS.map(d => (
+                    <button key={d} type="button"
+                      className={`avail-chip${days.includes(d) ? ' selected' : ''}`}
+                      onClick={() => toggleDay(d)}>
+                      {d.slice(0, 3)}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {days.length > 0 && (
+                <div className="form-field">
+                  <div className="avail-hours-header">
+                    <label className="form-label" style={{ marginBottom: 0 }}>Available Hours</label>
+                    {days.length > 1 && (
+                      <label className="avail-same-label">
+                        <input type="checkbox" checked={sameHours} onChange={e => setSameHours(e.target.checked)} />
+                        Same hours for all days
+                      </label>
+                    )}
+                  </div>
+
+                  {sameHours || days.length === 1 ? (
+                    <div className="avail-slots">
+                      {SLOTS.map(slot => (
+                        <button key={slot} type="button"
+                          className={`avail-chip${sharedSlots.includes(slot) ? ' selected' : ''}`}
+                          onClick={() => toggleSharedSlot(slot)}>
+                          {slot}
+                        </button>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="avail-per-day">
+                      {days.map(day => (
+                        <div key={day} className="avail-day-row">
+                          <span className="avail-day-label">{day}</span>
+                          <div className="avail-slots">
+                            {SLOTS.map(slot => (
+                              <button key={slot} type="button"
+                                className={`avail-chip${(slotsByDay[day] || []).includes(slot) ? ' selected' : ''}`}
+                                onClick={() => toggleDaySlot(day, slot)}>
+                                {slot}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+
               <div className="form-field">
                 <label className="form-label">Message</label>
-                <textarea className="form-input" name="message" required value={form.message} onChange={change} rows={5} placeholder="Tell us what you're looking for, preferred dates, any questions…" style={{ resize: 'vertical' }} />
+                <textarea className="form-input" name="message" required value={form.message} onChange={change} rows={4} placeholder="Tell us what you're looking for, any questions…" style={{ resize: 'vertical' }} />
               </div>
-              <button type="submit" className="btn btn-primary" style={{ alignSelf: 'flex-start' }}>
-                Send Message
+
+              {error && (
+                <p style={{ color: 'var(--terra)', fontSize: 13 }}>{error}</p>
+              )}
+
+              <button type="submit" className="btn btn-primary" style={{ alignSelf: 'flex-start' }} disabled={loading}>
+                {loading ? 'Sending…' : 'Send Message'}
               </button>
             </form>
           </FadeUp>
@@ -640,10 +760,40 @@ function Reviews() {
   )
 }
 
-/* ─── Instagram Gallery ──────────────────────────────── */
-const IG_TOKEN = import.meta.env.VITE_INSTAGRAM_TOKEN
-const IG_FIELDS = 'id,media_type,media_url,thumbnail_url,permalink,caption'
-const IG_LIMIT  = 12
+/* ─── Gallery ────────────────────────────────────────── */
+const GALLERY_ITEMS = [
+  { id: '1',  type: 'image', src: '/gallery/IMG_0362.JPG' },
+  { id: '2',  type: 'image', src: '/gallery/IMG_8505.jpg' },
+  { id: '3',  type: 'image', src: '/gallery/IMG_8507.jpg' },
+  { id: '4',  type: 'image', src: '/gallery/IMG_8514.jpg' },
+  { id: '5',  type: 'image', src: '/gallery/IMG_8518.jpg' },
+  { id: '6',  type: 'image', src: '/gallery/IMG_8528.jpg' },
+  { id: '7',  type: 'image', src: '/gallery/IMG_8580.jpg' },
+  { id: '8',  type: 'image', src: '/gallery/IMG_8583.jpg' },
+  { id: '9',  type: 'image', src: '/gallery/IMG_8588.jpg' },
+  { id: '10', type: 'image', src: '/gallery/IMG_8595.jpg' },
+  { id: '11', type: 'image', src: '/gallery/IMG_8630.jpg' },
+  { id: '12', type: 'image', src: '/gallery/IMG_8633.jpg' },
+  { id: '13', type: 'image', src: '/gallery/IMG_8702.jpg' },
+  { id: '14', type: 'image', src: '/gallery/IMG_8722.jpg' },
+  { id: '15', type: 'image', src: '/gallery/IMG_8741.jpg' },
+  { id: '16', type: 'image', src: '/gallery/IMG_8750.jpg' },
+  { id: '17', type: 'image', src: '/gallery/IMG_8790.jpg' },
+  { id: '18', type: 'image', src: '/gallery/IMG_8804.jpg' },
+  { id: '19', type: 'image', src: '/gallery/IMG_8835.jpg' },
+  { id: '20', type: 'image', src: '/gallery/IMG_8846.jpg' },
+  { id: '21', type: 'image', src: '/gallery/IMG_8857.jpg' },
+  { id: '22', type: 'image', src: '/gallery/IMG_8871.jpg' },
+  { id: '23', type: 'image', src: '/gallery/IMG_8884.jpg' },
+  { id: '24', type: 'video', src: '/gallery/14e0b5cae3f946a380e90aa7e30a0020.mp4' },
+  { id: '25', type: 'video', src: '/gallery/45cfe284cab742c7b80c0b2df3d3db1b.mp4' },
+  { id: '26', type: 'video', src: '/gallery/51177f2042df465cbf6af228c04ba24c.mp4' },
+  { id: '27', type: 'video', src: '/gallery/80c1fb895b614ccaa4253559a1bfe6e8.mp4' },
+  { id: '28', type: 'video', src: '/gallery/8c7990123d1049cab3ef8ec416afe021.mp4' },
+  { id: '29', type: 'video', src: '/gallery/d26771cea71e4fb3ae1c03ec0bd7fc90.mp4' },
+  { id: '30', type: 'video', src: '/gallery/d39ee6d569a548a29d26cdf8fa8ced3f.mp4' },
+  { id: '31', type: 'video', src: '/gallery/e71dcdc3c3894561854c2d42cf5c8d74.mp4' },
+]
 
 const IgIcon = () => (
   <svg width="22" height="22" viewBox="0 0 24 24" fill="white">
@@ -651,22 +801,24 @@ const IgIcon = () => (
   </svg>
 )
 
+const PlayIcon = () => (
+  <svg width="48" height="48" viewBox="0 0 24 24" fill="white" style={{ filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.5))' }}>
+    <path d="M8 5v14l11-7z"/>
+  </svg>
+)
+
 function GalleryItem({ item, onClick }) {
-  const isVideo = item.media_type === 'VIDEO' || item.media_type === 'CAROUSEL_ALBUM'
-  const src     = item.media_type === 'VIDEO' ? item.thumbnail_url : item.media_url
   return (
-    <a className="gallery-item" href={item.permalink} target="_blank" rel="noopener noreferrer"
-      onClick={e => { e.preventDefault(); onClick(item) }}>
-      <img src={src} alt={item.caption?.slice(0, 60) || 'Instagram post'} className="gallery-media" loading="lazy" />
+    <button className="gallery-item" onClick={() => onClick(item)} aria-label="View photo">
+      {item.type === 'video' ? (
+        <video src={item.src} muted playsInline preload="metadata" className="gallery-media" />
+      ) : (
+        <img src={item.src} alt="Hair style by Mamy" className="gallery-media" loading="lazy" />
+      )}
       <div className="gallery-overlay">
-        <IgIcon />
-        {isVideo && (
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="white" style={{ position: 'absolute', top: 10, right: 10 }}>
-            <path d="M8 5v14l11-7z"/>
-          </svg>
-        )}
+        {item.type === 'video' && <PlayIcon />}
       </div>
-    </a>
+    </button>
   )
 }
 
@@ -681,23 +833,16 @@ function Lightbox({ item, onClose, onPrev, onNext }) {
     return () => window.removeEventListener('keydown', h)
   }, [onClose, onPrev, onNext])
 
-  const isVideo = item.media_type === 'VIDEO'
   return (
     <div className="lightbox" onClick={onClose}>
       <button className="lightbox-close" onClick={onClose} aria-label="Close">✕</button>
       <button className="lightbox-prev" onClick={e => { e.stopPropagation(); onPrev() }} aria-label="Previous">‹</button>
       <div className="lightbox-content" onClick={e => e.stopPropagation()}>
-        {isVideo ? (
-          <video src={item.media_url} controls autoPlay playsInline className="lightbox-media" />
+        {item.type === 'video' ? (
+          <video src={item.src} controls autoPlay playsInline className="lightbox-media" />
         ) : (
-          <img src={item.media_url} alt={item.caption?.slice(0, 80) || ''} className="lightbox-media" />
+          <img src={item.src} alt="Hair style by Mamy" className="lightbox-media" />
         )}
-        <div className="lightbox-footer">
-          {item.caption && <p className="lightbox-caption">{item.caption.slice(0, 120)}{item.caption.length > 120 ? '…' : ''}</p>}
-          <a href={item.permalink} target="_blank" rel="noopener noreferrer" className="lightbox-ig-link">
-            <IgIcon /> View on Instagram
-          </a>
-        </div>
       </div>
       <button className="lightbox-next" onClick={e => { e.stopPropagation(); onNext() }} aria-label="Next">›</button>
     </div>
@@ -705,23 +850,8 @@ function Lightbox({ item, onClose, onPrev, onNext }) {
 }
 
 function Gallery() {
-  const [items,  setItems]  = useState([])
-  const [status, setStatus] = useState('loading') // loading | ready | error | no-token
   const [active, setActive] = useState(null)
-
-  useEffect(() => {
-    if (!IG_TOKEN) { setStatus('no-token'); return }
-    fetch(`https://graph.instagram.com/me/media?fields=${IG_FIELDS}&limit=${IG_LIMIT}&access_token=${IG_TOKEN}`)
-      .then(r => r.json())
-      .then(data => {
-        if (data.error) throw new Error(data.error.message)
-        const visible = (data.data || []).filter(p => p.media_type !== 'CAROUSEL_ALBUM' || p.media_url)
-        setItems(visible)
-        setStatus('ready')
-      })
-      .catch(() => setStatus('error'))
-  }, [])
-
+  const items = GALLERY_ITEMS
   const idx   = items.indexOf(active)
   const close = () => setActive(null)
   const prev  = () => setActive(items[(idx - 1 + items.length) % items.length])
@@ -736,43 +866,21 @@ function Gallery() {
             <h2 className="section-heading">Style Gallery</h2>
             <div className="divider" />
             <p style={{ color: 'var(--muted)', maxWidth: 480, marginBottom: 48 }}>
-              Fresh from our Instagram — real styles, real clients.
+              Real styles, real clients — straight from the chair.
             </p>
           </FadeUp>
 
-          {status === 'loading' && (
-            <div className="gallery-grid">
-              {Array.from({ length: 9 }).map((_, i) => (
-                <div key={i} className="gallery-item gallery-skeleton" />
-              ))}
-            </div>
-          )}
+          <div className="gallery-grid">
+            {items.map(item => (
+              <GalleryItem key={item.id} item={item} onClick={setActive} />
+            ))}
+          </div>
 
-          {status === 'ready' && (
-            <div className="gallery-grid">
-              {items.map((item) => (
-                <GalleryItem key={item.id} item={item} onClick={setActive} />
-              ))}
-            </div>
-          )}
-
-          {(status === 'error' || status === 'no-token') && (
-            <div className="gallery-placeholder">
-              <IgIcon />
-              <p>{status === 'no-token' ? 'Add your Instagram token to .env.local to load the gallery.' : 'Could not load Instagram posts. Token may need refreshing.'}</p>
-              <a href="https://www.instagram.com/touche_sd/" target="_blank" rel="noopener noreferrer" className="btn btn-dark-outline" style={{ marginTop: 16 }}>
-                View @touche_sd on Instagram
-              </a>
-            </div>
-          )}
-
-          {status === 'ready' && (
-            <div style={{ textAlign: 'center', marginTop: 48 }}>
-              <a href="https://www.instagram.com/touche_sd/" target="_blank" rel="noopener noreferrer" className="btn btn-dark-outline">
-                <IgIcon /> Follow @touche_sd on Instagram
-              </a>
-            </div>
-          )}
+          <div style={{ textAlign: 'center', marginTop: 48 }}>
+            <a href="https://www.instagram.com/touche_sd/" target="_blank" rel="noopener noreferrer" className="btn btn-dark-outline">
+              <IgIcon /> Follow on Instagram
+            </a>
+          </div>
         </div>
       </section>
 
