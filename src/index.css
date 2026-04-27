@@ -761,7 +761,9 @@ nav {
   .gallery-section { padding: 64px 0; }
   .slideshow-wrap { gap: 8px; }
   .slideshow-btn { width: 32px; height: 32px; font-size: 1.1rem; }
-  .slideshow-slides { gap: 6px; }
+  .slideshow-slides { grid-template-columns: 1fr; }
+  .slideshow-item:nth-child(2),
+  .slideshow-item:nth-child(3) { display: none; }
   .lightbox-prev { left: 6px; }
   .lightbox-next { right: 6px; }
 }
