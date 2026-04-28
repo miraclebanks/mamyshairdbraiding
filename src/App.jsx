@@ -2,8 +2,9 @@ import { useState, useEffect, useRef } from 'react'
 
 const PHONE_HREF = 'tel:7604029087'
 const YELP_URL   = 'https://www.yelp.com/biz/african-hair-braiding-by-mamy-san-diego-3?osq=mamys+hair+braiding&override_cta=Request+an+appointment'
-const LOGO_NAV    = '/logo.svg'
-const LOGO_FOOTER = '/logo-light.svg'
+const LOGO_URL = '/main-logo.webp'
+const LOGO_FILTER_NAV    = 'sepia(1) saturate(2.8) hue-rotate(5deg) brightness(0.62) contrast(1.1)'
+const LOGO_FILTER_FOOTER = 'sepia(1) saturate(1.4) hue-rotate(10deg) brightness(0.88)'
 
 const services = [
   { icon: '✦',  name: 'Miracle Knots',     desc: 'Our signature knotless technique — ultra-lightweight, seamless at the root, and incredibly natural-looking. The ultimate protective style.' },
@@ -81,7 +82,7 @@ function Nav() {
       <nav>
         <div className="container nav-inner">
           <a href="#" className="nav-logo">
-            <img src={LOGO_NAV} alt="Mamy's Hair Braiding" style={{ height: 56, width: 'auto' }} />
+            <img src={LOGO_URL} alt="Mamy's Hair Braiding" style={{ height: 48, width: 'auto', filter: LOGO_FILTER_NAV }} />
           </a>
           <ul className="nav-links">
             <li><a href="#services">Services</a></li>
@@ -600,7 +601,7 @@ function Footer() {
         <div className="footer-grid">
           <div>
             <div style={{ marginBottom: 20 }}>
-              <img src={LOGO_FOOTER} alt="Mamy's Hair Braiding" style={{ height: 56, width: 'auto' }} />
+              <img src={LOGO_URL} alt="Mamy's Hair Braiding" style={{ height: 52, width: 'auto', filter: LOGO_FILTER_FOOTER }} />
             </div>
             <p className="footer-brand-text">
               African Hair Braiding by Mamy — San Diego and Orange County's trusted destination for expert braiding, custom wigs, microblading, and eyelash extensions. 20+ years of artistry.
