@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 
 const PHONE_HREF = 'tel:7604029087'
 const YELP_URL   = 'https://www.yelp.com/biz/african-hair-braiding-by-mamy-san-diego-3?osq=mamys+hair+braiding&override_cta=Request+an+appointment'
-const LOGO_URL = 'https://mamyshairbraiding.com/wp-content/uploads/2019/05/Mamy-Hair-Braiding-San-DIego-Logo-2.png'
+const LOGO_URL = '/logo-icon-alpha.png'
 
 const LOGO_FILTER_NAV    = 'sepia(1) saturate(2.8) hue-rotate(5deg) brightness(0.62) contrast(1.1)'
 const LOGO_FILTER_FOOTER = 'sepia(1) saturate(1.4) hue-rotate(10deg) brightness(0.88)'
