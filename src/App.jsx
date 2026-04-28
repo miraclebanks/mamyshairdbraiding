@@ -252,7 +252,7 @@ function Social() {
     <section className="social-section" id="social">
       <div className="container">
         <span className="section-label">Follow Along</span>
-        <h2 className="section-heading">Find Us on Social</h2>
+        <h2 className="section-heading">Find Us on Social Media</h2>
         <p className="social-sub">Follow Mamy for style inspiration, behind-the-scenes looks, and exclusive specials.</p>
         <div className="social-cards">
           <a className="social-card" href="https://www.tiktok.com/@mamybenju1" target="_blank" rel="noopener noreferrer">
