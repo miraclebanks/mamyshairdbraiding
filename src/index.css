@@ -240,7 +240,8 @@ nav {
   position: relative;
   min-height: calc(100svh - var(--nav-h));
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  padding-top: clamp(60px, 10vh, 120px);
   overflow: hidden;
   background: linear-gradient(145deg, #1E0A06 0%, #3A1810 45%, #5C2416 100%);
 }

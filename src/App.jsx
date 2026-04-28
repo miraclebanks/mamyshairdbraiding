@@ -328,7 +328,7 @@ function Locations() {
           <span className="section-label">Where to Find Us</span>
           <h2 className="section-heading">Our Locations</h2>
           <div className="divider" />
-          <p style={{ color: 'var(--muted)', maxWidth: 480 }}>We serve clients across San Diego County and Orange County. All appointments are by appointment only.</p>
+          <p style={{ color: 'var(--muted)', maxWidth: 480 }}>Serving clients across San Diego and Orange County — by appointment only.</p>
         </FadeUp>
         <div className="locations-grid">
           <LocationCard city="San Diego" address="3651 Midway Dr #40, San Diego, CA 92110" mapsUrl="https://maps.google.com/?q=3651+Midway+Dr+%2340+San+Diego+CA+92110" label="San Diego" />
