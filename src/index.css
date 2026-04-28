@@ -212,6 +212,29 @@ nav {
   color: var(--deep);
 }
 
+/* mobile call banner — hidden on desktop */
+.mobile-call-banner {
+  display: none;
+}
+@media (max-width: 768px) {
+  .mobile-call-banner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--terra);
+    color: var(--white);
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 13px 16px;
+    text-decoration: none;
+    width: 100%;
+  }
+  .mobile-call-banner:hover { background: var(--terra-dark, #a84d1f); }
+}
+
 /* ─── HERO ───────────────────────────────────────────── */
 .hero {
   position: relative;

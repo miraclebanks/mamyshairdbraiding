@@ -100,6 +100,9 @@ function Nav() {
           </button>
         </div>
       </nav>
+      <a href={PHONE_HREF} className="mobile-call-banner">
+        <PhoneIcon /> Call Now
+      </a>
       <div className={`nav-mobile${open ? ' open' : ''}`}>
         <a href="#services"    onClick={close}>Services</a>
         <a href="#about"       onClick={close}>About Mamy</a>
