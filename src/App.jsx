@@ -2,10 +2,8 @@ import { useState, useEffect, useRef } from 'react'
 
 const PHONE_HREF = 'tel:7604029087'
 const YELP_URL   = 'https://www.yelp.com/biz/african-hair-braiding-by-mamy-san-diego-3?osq=mamys+hair+braiding&override_cta=Request+an+appointment'
-const LOGO_URL = '/logo-icon-alpha.png'
-
-const LOGO_FILTER_NAV    = 'sepia(1) saturate(2.8) hue-rotate(5deg) brightness(0.62) contrast(1.1)'
-const LOGO_FILTER_FOOTER = 'sepia(1) saturate(1.4) hue-rotate(10deg) brightness(0.88)'
+const LOGO_NAV    = '/logo.svg'
+const LOGO_FOOTER = '/logo-light.svg'
 
 const services = [
   { icon: '✦',  name: 'Miracle Knots',     desc: 'Our signature knotless technique — ultra-lightweight, seamless at the root, and incredibly natural-looking. The ultimate protective style.' },
@@ -83,7 +81,7 @@ function Nav() {
       <nav>
         <div className="container nav-inner">
           <a href="#" className="nav-logo">
-            <img src={LOGO_URL} alt="Mamy's Hair Braiding" style={{ height: 48, width: 'auto', filter: LOGO_FILTER_NAV }} />
+            <img src={LOGO_NAV} alt="Mamy's Hair Braiding" style={{ height: 56, width: 'auto' }} />
           </a>
           <ul className="nav-links">
             <li><a href="#services">Services</a></li>
@@ -392,7 +390,6 @@ const DAYS  = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Su
 const SLOTS = ['8:00 AM','10:00 AM','12:00 PM','2:00 PM','4:00 PM','6:00 PM','8:00 PM']
 
 const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY
-const CONTACT_EMAIL = import.meta.env.VITE_CONTACT_EMAIL
 
 function ContactForm() {
   const [form,       setForm]       = useState({ name: '', email: '', service: '', message: '' })
@@ -431,7 +428,6 @@ function ContactForm() {
 
     const body = new FormData()
     body.append('access_key', WEB3FORMS_KEY)
-    body.append('to', CONTACT_EMAIL)
     body.append('subject', `New Booking Request – ${form.service || 'General Inquiry'}`)
     body.append('from_name', form.name)
     body.append('name', form.name)
@@ -604,7 +600,7 @@ function Footer() {
         <div className="footer-grid">
           <div>
             <div style={{ marginBottom: 20 }}>
-              <img src={LOGO_URL} alt="Mamy's Hair Braiding" style={{ height: 52, width: 'auto', filter: LOGO_FILTER_FOOTER }} />
+              <img src={LOGO_FOOTER} alt="Mamy's Hair Braiding" style={{ height: 56, width: 'auto' }} />
             </div>
             <p className="footer-brand-text">
               African Hair Braiding by Mamy — San Diego and Orange County's trusted destination for expert braiding, custom wigs, microblading, and eyelash extensions. 20+ years of artistry.
